@@ -52,6 +52,7 @@ Start fresh each new day, each new big task, or when the chat gets long or the t
 ## What it does, and what it does not
 
 - Most of it is **advice**. The agent can drift from it. The exception is `.claude/settings.json`: Claude Code itself blocks reads of `.env`, `.env.*` and `.secrets/`, and asks you before a push, a merge, a delete, or an edit of `kb/approved/plan.md`. Settings cannot enforce "ask before sending email, messages, files or data to other people or outside services, publishing, deploying, or paying", so that stays advice. "Sending" means out of the project: to other people, or to an outside service such as an upload. A reply to you or a brief to a background agent needs no approval.
+- For a finished branch, the agent asks once for the whole step: push, PR, merge, and delete of the merged branch. Claude Code can still show its own prompt for each of these commands, because of the ask rules in `.claude/settings.json`.
 - The settings have limits. The read block covers Claude's file tools and shell commands that Claude Code knows, such as `cat`. It does not cover a script that opens the file itself. The delete rule matches `rm` and `Remove-Item`, not every other way to delete a file. For a block on every process, turn on the Claude Code sandbox.
 - The interview is advice too. The agent may stop asking too early. If the plan feels thin, say "interview me more".
 - The reviewer is read-only only because of its `tools: Read, Grep, Glob` line. Nothing stops the agent from editing that file later.
