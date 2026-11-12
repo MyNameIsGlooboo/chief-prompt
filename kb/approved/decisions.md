@@ -7,3 +7,4 @@
 - 2026-11-13: Feedback on the prompt comes from the owner's own projects, in `kb/chief-prompt-lessons.md`. It is for the owner only and is not in the template. Reason: real use is better evidence than fake projects, and other users do not need it.
 - 2026-11-13: `kb/chief-prompt-lessons.md` is a separate file from `kb/lessons.md`. Reason: `lessons.md` has a 20-line limit and gets pruned.
 - 2026-11-13: This repo uses its own prompt. Reason: the owner's first real project for feedback.
+- 2026-11-13: Keep the repo up to date by reading the pages in `kb/sources.md` at each "Learn" review (option B). No scheduled agent for now. Reason: no new machinery, and the prompt has no real-project use yet, so automation is early.
