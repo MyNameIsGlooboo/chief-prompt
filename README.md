@@ -1,5 +1,7 @@
 # The Chief Prompt
 
+Last updated: 2026-11-13, with Claude Fable 5.2. See [CHANGELOG.md](CHANGELOG.md).
+
 **One short prompt and six ready files that turn one [Claude Code](https://code.claude.com) session into a chief of staff for a project, new or existing.** You talk to one agent. It interviews you until it can write a plan, keeps the memory in files, asks you for decisions in short cards, and never sends, publishes, deploys, pays, deletes, or merges for you without your approval.
 
 In this prompt, an *agent* means a Claude Code agent (subagent): a separate worker with its own memory and its own rules, defined in `.claude/agents/`.
@@ -81,6 +83,7 @@ Type `/chief-update` in the project. The skill gets the newest `template/` from 
 - It sets up git, but not GitHub branch protection or a usage watch. If you choose "local only", there is no copy of your work on another computer.
 - Parallel writers need your review. Each one opens its own PR, and you read and merge them. Two or three at a time is about what one person can review. If two PRs touch the same code, the second one must be updated after the first is merged.
 - Background agents spend their own usage, each starts with a fresh memory (it does not see the chat), and their permission questions appear in your main chat. Many at once can use a lot of your limit.
+- The "Last updated" line at the top names the model that wrote the last change. It does not mean the prompt was tested with that model.
 - It has not been tested over weeks of real use. Expect to adjust the wording after a week.
 - Claude Code docs: rules with no exceptions belong in settings, not prose, which is why this repo ships `.claude/settings.json`. It has the shell rules for both Bash and PowerShell. The rule formats follow the [permissions docs](https://code.claude.com/docs/en/permissions) (checked 13 Nov 2026), and a script checks that every rule is in the file. They are not tested in a live session, so try to edit `kb/approved/plan.md` once, and try a push, and check that Claude Code asks you. A Stop hook can enforce "run a check before you say done" the same way, but this repo does not include one.
 
@@ -102,7 +105,7 @@ Sources (checked 9 to 12 Nov 2026):
 
 This part is for the owner of this repo. If you only use the prompt, skip it.
 
-**Check.** `python scripts/check.py` checks the template files and the prompt: valid JSON, every deny and ask rule present for Bash and PowerShell, the reviewer's tools line, the rules file under 100 lines and with no import, the update skill (its name, that only the user can start it, and that it names both files it replaces), `CLAUDE.md` with the Language line and both imports, the prompt under 400 words, and the root copies equal to the template. It uses no model and costs nothing. GitHub Actions runs it on every push and pull request.
+**Check.** `python scripts/check.py` checks the template files and the prompt: valid JSON, every deny and ask rule present for Bash and PowerShell, the reviewer's tools line, the rules file under 100 lines and with no import, the update skill (its name, that only the user can start it, and that it names both files it replaces), `CLAUDE.md` with the Language line and both imports, the prompt under 400 words, the root copies equal to the template, and the "Last updated" line at the top of this file with the same date as the newest entry in `CHANGELOG.md`. It uses no model and costs nothing. GitHub Actions runs it on every push and pull request.
 
 **This repo uses its own prompt.** The root `CLAUDE.md` holds only the rules for this repo. The root `.claude/rules/chief-of-staff.md`, `.claude/skills/chief-update/SKILL.md`, `.claude/settings.json`, `.claude/agents/reviewer.md` and `.gitignore` are exact copies of the template files, and the check script fails if they differ. The `kb/` folder holds this repo's own status, tasks, and decisions.
 
