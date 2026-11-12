@@ -1,0 +1,1 @@
+- [ ] Use the prompt in one real project. Done when: the files in "What you should see" in README.md exist there, and the lines of its kb/chief-prompt-lessons.md are added to kb/chief-prompt-lessons.md in this repo.

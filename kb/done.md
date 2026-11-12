@@ -1,0 +1,2 @@
+- 2026-11-13: Ship template files, check script, and the 5-step prompt (PR 1).
+- 2026-11-13: Apply the prompt to this repo: CLAUDE.md, .claude/, .gitignore, kb/.
