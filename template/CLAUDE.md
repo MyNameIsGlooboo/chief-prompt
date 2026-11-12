@@ -11,7 +11,7 @@ Ask decisions as short cards: one question, two or three options with an example
 ## Approval
 
 - `.claude/settings.json` blocks reads of `.env`, `.env.*` and `.secrets/`. It asks me before `git push`, `git merge`, `gh pr merge`, `gh repo create`, deleting files, and any edit of `kb/approved/plan.md`.
-- Settings cannot catch these: sending email or messages to other people, publishing, deploying, and paying. Ask me first for those too, because they cannot be undone.
+- Settings cannot catch these: sending email, messages, files or data to other people or outside services, publishing, deploying, and paying. Ask me first for those too, because they cannot be undone.
 - Always work on branches. The first commit of a new repo is the only commit made directly on main.
 - You may delete files you created on your own branch. Ask before deleting anything else.
 - Change `kb/approved/plan.md` only with the Edit or Write tool, never with a shell command.
