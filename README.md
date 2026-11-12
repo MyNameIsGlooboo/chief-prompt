@@ -4,6 +4,8 @@
 
 In this prompt, an *agent* means a Claude Code agent (subagent): a separate worker with its own memory and its own rules, defined in `.claude/agents/`.
 
+**Why it is short:** there are many guides on this topic, so this repo collects them in one place. The prompt stays short and gives the agent few instructions and no skills to start with. It does not depend on how smart a model is, so it should need fewer updates when models get stronger or weaker. Models change, so re-check it from time to time.
+
 ## How to use it
 
 **Brand-new empty folder?** Skip to the paste step.
