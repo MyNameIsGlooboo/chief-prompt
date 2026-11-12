@@ -13,6 +13,8 @@ ROOT = Path(__file__).resolve().parent.parent
 TEMPLATE = ROOT / "template"
 
 CLAUDE_MD_MAX_LINES = 100
+RULES_MAX_LINES = 100
+RULES_FILE = ".claude/rules/chief-of-staff.md"
 PROMPT_MAX_WORDS = 400
 
 REQUIRED_DENY = ["Read(.env)", "Read(.env.*)", "Read(/.secrets/**)"]
@@ -33,9 +35,11 @@ REQUIRED_GITIGNORE = [".env", ".env.*", ".secrets/", ".obsidian/"]
 REQUIRED_IMPORTS = ["@kb/status.md", "@kb/todo.md"]
 REVIEWER_TOOLS = "tools: Read, Grep, Glob"
 # This repo uses its own prompt. These root files must be exact copies of the template.
-ROOT_COPIES = [".claude/settings.json", ".claude/agents/reviewer.md", ".gitignore"]
+ROOT_COPIES = [RULES_FILE, ".claude/settings.json", ".claude/agents/reviewer.md", ".gitignore"]
 # Files the prompt must name, so the agent copies all of them.
-PROMPT_MUST_NAME = ["CLAUDE.md", ".gitignore", ".claude/settings.json", ".claude/agents/reviewer.md"]
+PROMPT_MUST_NAME = [RULES_FILE, "CLAUDE.md", ".gitignore", ".claude/settings.json", ".claude/agents/reviewer.md"]
+# The prompt must tell the agent to keep files that already exist.
+PROMPT_MUST_SAY = ["never replace", "Add only what is missing"]
 
 failures = []
 
@@ -86,6 +90,18 @@ def check_reviewer():
     check("name: reviewer" in lines, "reviewer.md is named reviewer")
 
 
+def check_rules():
+    text = read(TEMPLATE / RULES_FILE)
+    if text is None:
+        return
+    lines = text.splitlines()
+    check(len(lines) < RULES_MAX_LINES, f"the rules file is under {RULES_MAX_LINES} lines ({len(lines)})")
+    check("one main agent, no team" in text, "the rules file has the chief-of-staff line")
+    # An import in this file would resolve from .claude/rules/, not from the project root.
+    check(not any(line.startswith("@") for line in lines), "the rules file has no import line")
+    check("Talk to me in" not in text, "the rules file has no Language line (it lives in CLAUDE.md)")
+
+
 def check_claude_md():
     text = read(TEMPLATE / "CLAUDE.md")
     if text is None:
@@ -120,6 +136,8 @@ def check_prompt():
     for name in PROMPT_MUST_NAME:
         check(name in prompt, f"prompt names {name}")
     check("/template" in prompt or "template/" in prompt, "prompt points to the template folder")
+    for phrase in PROMPT_MUST_SAY:
+        check(phrase in prompt, f"prompt says '{phrase}'")
 
 
 def check_root_copies():
@@ -131,7 +149,7 @@ def check_root_copies():
     text = read(ROOT / "CLAUDE.md")
     if text is not None:
         lines = text.splitlines()
-        check("@template/CLAUDE.md" in lines, "root CLAUDE.md imports @template/CLAUDE.md")
+        check("Talk to me in" in text, "root CLAUDE.md has the Language line")
         last = [line for line in lines if line.strip()][-len(REQUIRED_IMPORTS):]
         check(last == REQUIRED_IMPORTS, "root CLAUDE.md ends with @kb/status.md and @kb/todo.md")
     for name in ["status.md", "todo.md"]:
@@ -141,6 +159,7 @@ def check_root_copies():
 check_settings()
 check_root_copies()
 check_reviewer()
+check_rules()
 check_claude_md()
 check_gitignore()
 check_prompt()
