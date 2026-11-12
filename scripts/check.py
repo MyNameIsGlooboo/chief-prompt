@@ -98,7 +98,8 @@ def check_rules():
     check(len(lines) < RULES_MAX_LINES, f"the rules file is under {RULES_MAX_LINES} lines ({len(lines)})")
     check("one main agent, no team" in text, "the rules file has the chief-of-staff line")
     # An import in this file would resolve from .claude/rules/, not from the project root.
-    check(not any(line.startswith("@") for line in lines), "the rules file has no import line")
+    imports = [line for line in lines if re.search(r"(^|\s)@[\w./~-]+", line)]
+    check(not imports, "the rules file has no import")
     check("Talk to me in" not in text, "the rules file has no Language line (it lives in CLAUDE.md)")
 
 
@@ -150,6 +151,8 @@ def check_root_copies():
     if text is not None:
         lines = text.splitlines()
         check("Talk to me in" in text, "root CLAUDE.md has the Language line")
+        # The rules now load from .claude/rules/. An import of the template would load a second copy.
+        check("@template/" not in text, "root CLAUDE.md does not import from template/")
         last = [line for line in lines if line.strip()][-len(REQUIRED_IMPORTS):]
         check(last == REQUIRED_IMPORTS, "root CLAUDE.md ends with @kb/status.md and @kb/todo.md")
     for name in ["status.md", "todo.md"]:

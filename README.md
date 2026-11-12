@@ -21,10 +21,10 @@ Then paste this as your first message in the project:
 
 ```text
 Do these steps in order.
-1. Setup files. Clone https://github.com/MyNameIsGlooboo/chief-prompt to a temporary folder, use its template/ folder, then remove the clone. If git is missing, stop and ask me. Copy .claude/rules/chief-of-staff.md exactly, and replace an older copy of it. It is now your rules for this project: you are my chief of staff, one main agent, no team. For the other four files: if the file does not exist here, copy it exactly. If it exists, never replace or rewrite it. Add only what is missing and tell me what you added. CLAUDE.md: the Language part, and the two @kb lines at the end. .gitignore: the missing lines. .claude/settings.json: the missing deny and ask rules. .claude/agents/reviewer.md: if another one exists, ask me. Show me .claude/settings.json and wait for my yes before the first commit.
+1. Setup files. Clone https://github.com/MyNameIsGlooboo/chief-prompt to a temporary folder, use its template/ folder, then remove the clone. If git is missing, stop and ask me. Copy .claude/rules/chief-of-staff.md exactly, and replace an older copy of it. It is now your rules for this project: you are my chief of staff, one main agent, no team. For the other four files: if the file does not exist here, copy it exactly. If it exists, never replace or rewrite it. Add only what is missing and tell me what you added. CLAUDE.md: the Language part, and the two @kb lines at the end. If it still holds old chief-of-staff rules from an earlier version of this prompt, show me those lines and ask before you remove them. .gitignore: the missing lines. .claude/settings.json: the missing deny and ask rules. .claude/agents/reviewer.md: if another one exists, ask me. Show me .claude/settings.json and wait for my yes before you commit these files.
 2. Language. Set the Language line in CLAUDE.md to: simple English (A2). Talk to me that way from now on.
-3. Memory folder. Create kb/ as your rules describe: status.md, todo.md, done.md, lessons.md, approved/ and research/. Keep any of these that already exist. Set Last review in status.md to today's date.
-4. Git. If this folder already is a git repo, keep it and work on a branch. If not, ask me: local only, or GitHub too? For GitHub, ask private (suggested) or public, and get my yes before you create the repo or push. Tell me if gh (the GitHub command-line tool) is missing or not logged in.
+3. Memory folder. Create kb/ as your rules describe: status.md, todo.md, done.md, lessons.md, approved/ and research/. Keep any of these that already exist. In a new status.md, set Last review to today's date.
+4. Git. If this folder already is a git repo, keep it and work on a branch. If it is not, or it has no remote, ask me: local only, or GitHub too? For GitHub, ask private (suggested) or public, and get my yes before you create the repo or push. Tell me if gh (the GitHub command-line tool) is missing or not logged in.
 5. Interview, sized to the project. Ask about goal, audience, done-when, limits (time, money, tools), main risks, and "what command or observation proves this works?" For a small project, three questions and a five-line plan are enough. Stop when you can restate the goal, the done-when, and the first three tasks, and I confirm. Draft in kb/research/plan-draft.md; after my yes, write it to kb/approved/plan.md and add its steps to todo.md. If files already exist, read them and ask only about the gaps.
 ```
 
@@ -54,6 +54,8 @@ Start fresh each new day, each new big task, or when the chat gets long or the t
 ### Update a project to a newer version of the prompt
 
 Copy [`.claude/rules/chief-of-staff.md`](template/.claude/rules/chief-of-staff.md) from this repo over the one in your project. It is the only file an update replaces, so your `CLAUDE.md`, your `.gitignore` and your settings stay as they are. Then ask the agent: "Compare `.claude/settings.json` with the template in the chief-prompt repo and add the missing rules." Open a new session after that.
+
+**Project set up with the first version of the prompt?** There the rules are still inside `CLAUDE.md`, and there is no `.claude/rules/` folder. Paste the prompt again. The agent adds the rules file, then shows you the old chief-of-staff parts in `CLAUDE.md` and asks before it removes them. Your Language line, your own rules and the two `@kb` lines stay. Do not skip this: if both copies stay, they will disagree after the next update.
 
 ### If a session ends
 
