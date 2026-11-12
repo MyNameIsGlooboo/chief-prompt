@@ -51,13 +51,13 @@ Start fresh each new day, each new big task, or when the chat gets long or the t
 
 ## What it does, and what it does not
 
-- Most of it is **advice**. The agent can drift from it. The exception is `.claude/settings.json`: Claude Code itself blocks reads of `.env`, `.env.*` and `.secrets/`, and asks you before a push, a merge, a delete, or an edit of `kb/approved/plan.md`. Settings cannot enforce "send, publish, deploy, pay", so those stay advice.
+- Most of it is **advice**. The agent can drift from it. The exception is `.claude/settings.json`: Claude Code itself blocks reads of `.env`, `.env.*` and `.secrets/`, and asks you before a push, a merge, a delete, or an edit of `kb/approved/plan.md`. Settings cannot enforce "ask before sending email, messages, files or data to other people or outside services, publishing, deploying, or paying", so that stays advice. "Sending" means out of the project: to other people, or to an outside service such as an upload. A reply to you or a brief to a background agent needs no approval.
 - The settings have limits. The read block covers Claude's file tools and shell commands that Claude Code knows, such as `cat`. It does not cover a script that opens the file itself. The delete rule matches `rm` and `Remove-Item`, not every other way to delete a file. For a block on every process, turn on the Claude Code sandbox.
 - The interview is advice too. The agent may stop asking too early. If the plan feels thin, say "interview me more".
 - The reviewer is read-only only because of its `tools: Read, Grep, Glob` line. Nothing stops the agent from editing that file later.
 - It does not create a check. A new project has no tests on day one, so `CLAUDE.md` makes the agent ask you for one at the first coding task.
 - "Save as you go" is advice too. The agent can forget to update `kb/status.md` or `kb/todo.md`. Ask "Is everything saved?" now and then. To make saving automatic and enforced, you need a hook (a small script that runs by itself), which this prompt-only repo does not include.
-- The agent cannot see how full its memory is. Check `/context` yourself, and start a new session (after the agent has saved) before it gets very full.
+- Long chats cost more and lose focus. Type `/clear` between tasks (after the agent has saved). You rarely run out of memory now, because Claude Code makes the chat shorter by itself.
 - It sets up git, but not GitHub branch protection or a usage watch. If you choose "local only", there is no copy of your work on another computer.
 - Parallel writers need your review. Each one opens its own PR, and you read and merge them. Two or three at a time is about what one person can review. If two PRs touch the same code, the second one must be updated after the first is merged.
 - Background agents spend their own usage, each starts with a fresh memory (it does not see the chat), and their permission questions appear in your main chat. Many at once can use a lot of your limit.
