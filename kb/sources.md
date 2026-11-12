@@ -1,6 +1,6 @@
 # Sources
 
-The trusted pages for this prompt. At each "Learn" review, the `sources-review` skill compares them with `template/` and `README.md`. The steps are in `.claude/skills/sources-review/SKILL.md`.
+The trusted pages for this prompt. At each "Learn" review, the `sources-review` skill compares them with `template/`, `README.md` and `docs/`. The steps are in `.claude/skills/sources-review/SKILL.md`.
 
 Only the owner adds a page to this list.
 
