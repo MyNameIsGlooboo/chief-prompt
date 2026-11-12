@@ -1,1 +1,3 @@
+- [x] Add the sources review. Done when: `kb/sources.md` exists, root `CLAUDE.md` has the rule, and `python scripts/check.py` passes.
+- [ ] First sources review. Done when: `kb/research/sources-YYYY-MM-DD.md` exists and "Last read" in `kb/sources.md` has that date.
 - [ ] Use the prompt in one real project. Done when: the files in "What you should see" in README.md exist there, and the lines of its kb/chief-prompt-lessons.md are added to kb/chief-prompt-lessons.md in this repo.

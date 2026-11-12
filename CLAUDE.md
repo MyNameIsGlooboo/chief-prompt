@@ -12,6 +12,7 @@ This repo uses its own prompt. The standing rules come from the template, so the
 - Keep the prompt short. The check script fails over 400 words.
 - When you change a rule, update the "What it does, and what it does not" part of `README.md` in the same change.
 - `kb/` in this repo is public on GitHub. Write nothing private in it.
+- At each "Learn" review, also read the pages in `kb/sources.md` and follow the rules at the top of that file.
 - If a rule in the template fails or confuses you, add a dated line to `kb/chief-prompt-lessons.md`: the rule, what happened, and why. Never prune this file.
 
 @kb/status.md
