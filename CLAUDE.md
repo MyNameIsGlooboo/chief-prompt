@@ -8,9 +8,9 @@ Talk to me in simple English (A2). Keep commands, error text, and technical term
 
 ## Rules for this repo only
 
-- The product is the prompt in `README.md` and the five files in `template/`. A change to `template/` changes the rules of every project that uses the prompt, so treat it as code.
+- The product is the prompt in `README.md` and the six files in `template/`. A change to `template/` changes the rules of every project that uses the prompt, so treat it as code.
 - The proof for every task is `python scripts/check.py`. It must pass before you call a task done.
-- `.claude/rules/chief-of-staff.md`, `.claude/settings.json`, `.claude/agents/reviewer.md` and `.gitignore` in the repo root are exact copies of the files in `template/`. Change the file in `template/` first, then copy it. The check script fails if they differ.
+- `.claude/rules/chief-of-staff.md`, `.claude/skills/chief-update/SKILL.md`, `.claude/settings.json`, `.claude/agents/reviewer.md` and `.gitignore` in the repo root are exact copies of the files in `template/`. Change the file in `template/` first, then copy it. The check script fails if they differ.
 - Keep the prompt short. The check script fails over 400 words.
 - When you change a rule, update the "What it does, and what it does not" part of `README.md` in the same change.
 - `kb/` in this repo is public on GitHub. Write nothing private in it.

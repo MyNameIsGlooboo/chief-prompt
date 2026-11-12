@@ -14,6 +14,7 @@ Check that the prompt still agrees with its sources. Write findings and proposal
    - `template/.claude/settings.json` with the Permissions page: rule syntax, the Bash and PowerShell parts, and how `Read` and `Edit` path patterns match.
    - `template/.claude/agents/reviewer.md` with the frontmatter reference on the Subagents page.
    - `template/.claude/rules/chief-of-staff.md` and `template/CLAUDE.md` with the Memory page (size, imports, `.claude/rules/`) and with the newest "Prompting Claude ..." guide (approval wording, subagents, cautions that pile up).
+   - `template/.claude/skills/chief-update/SKILL.md` with the frontmatter reference on the Skills page.
    - `README.md`, part "What it does, and what it does not", with Best practices, most of all its part "What you can stop doing".
    - The engineering blog: read the titles, and open a post only if it is about agent memory, subagents, or instruction files.
 5. Ask the owner to run `/doctor prompt-audit template`, because only the owner can type it. Add its findings to the report. If the owner skips it, say so in the report.

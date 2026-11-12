@@ -3,4 +3,5 @@
 - [x] First sources review. Done when: `kb/research/sources-YYYY-MM-DD.md` exists and "Last read" in `kb/sources.md` has that date.
 - [x] Split the template so the prompt works in a project that already has files. Done when: the rules are in `template/.claude/rules/chief-of-staff.md`, the prompt says to keep existing files, and `python scripts/check.py` passes.
 - [ ] Try the prompt in one project that already has a `CLAUDE.md`, a `.gitignore` and settings. Done when: `git diff` there shows only added lines, and what went wrong is in kb/chief-prompt-lessons.md.
+- [ ] Try `/chief-update` in one project after the next template change. Done when: `git diff` there shows the new rules file and only added lines in the other files, and what went wrong is in kb/chief-prompt-lessons.md.
 - [ ] Use the prompt in one real project. Done when: the files in "What you should see" in README.md exist there, and the lines of its kb/chief-prompt-lessons.md are added to kb/chief-prompt-lessons.md in this repo.
