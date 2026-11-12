@@ -192,8 +192,11 @@ def check_changelog():
     top = "\n".join(readme.splitlines()[:5])
     match = re.search(r"^Last updated: (\d{4}-\d{2}-\d{2}), with Claude \S.*$", top, re.MULTILINE)
     check(match is not None, "README.md has the 'Last updated' line with a date and a model at the top")
-    dates = re.findall(r"^## (\d{4}-\d{2}-\d{2})$", changelog, re.MULTILINE)
+    # Take every "## " heading, so an entry with a badly written date cannot be skipped.
+    headings = re.findall(r"^## (.*)$", changelog, re.MULTILINE)
+    dates = [heading for heading in headings if re.fullmatch(r"\d{4}-\d{2}-\d{2}", heading)]
     check(bool(dates), "CHANGELOG.md has at least one dated entry")
+    check(dates == headings, "every '## ' heading in CHANGELOG.md is only a date (YYYY-MM-DD)")
     if match is None or not dates:
         return
     check(dates == sorted(dates, reverse=True), "CHANGELOG.md has the newest date first")
