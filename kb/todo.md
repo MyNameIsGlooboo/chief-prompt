@@ -1,4 +1,6 @@
 - [x] Add the sources review. Done when: `kb/sources.md` exists, root `CLAUDE.md` has the rule, and `python scripts/check.py` passes.
 - [x] Decide on the three proposals in `kb/research/sources-2026-11-13.md`. Done when: each one has a yes or no in `kb/approved/decisions.md`.
 - [x] First sources review. Done when: `kb/research/sources-YYYY-MM-DD.md` exists and "Last read" in `kb/sources.md` has that date.
+- [x] Split the template so the prompt works in a project that already has files. Done when: the rules are in `template/.claude/rules/chief-of-staff.md`, the prompt says to keep existing files, and `python scripts/check.py` passes.
+- [ ] Try the prompt in one project that already has a `CLAUDE.md`, a `.gitignore` and settings. Done when: `git diff` there shows only added lines, and what went wrong is in kb/chief-prompt-lessons.md.
 - [ ] Use the prompt in one real project. Done when: the files in "What you should see" in README.md exist there, and the lines of its kb/chief-prompt-lessons.md are added to kb/chief-prompt-lessons.md in this repo.
