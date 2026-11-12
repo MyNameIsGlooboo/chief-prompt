@@ -96,7 +96,7 @@ This file is separate from `kb/lessons.md`. `kb/lessons.md` is about the project
 
 Before I update this repo, I collect `kb/chief-prompt-lessons.md` from my projects. The lines show which rules fail in real use.
 
-**Keeping it up to date.** [`kb/sources.md`](kb/sources.md) lists the trusted pages. At each review (when Last review is over seven days old), the agent reads them, compares them with `template/` and `README.md`, and writes what it finds to `kb/research/`. It proposes three changes at most, and I approve each one. This is advice, not enforced: it runs only when I open a session in this repo.
+**Keeping it up to date.** [`kb/sources.md`](kb/sources.md) lists the trusted pages. At each review (when Last review is over seven days old), the agent runs the [`sources-review`](.claude/skills/sources-review/SKILL.md) skill: it reads the pages, compares them with `template/` and `README.md`, and writes what it finds to `kb/research/`. It proposes three changes at most, and I approve each one. I can also start it myself with `/sources-review`. This is advice, not enforced: it runs only when I open a session in this repo. The skill is for this repo only and is not in the template.
 
 ## License
 

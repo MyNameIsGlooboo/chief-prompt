@@ -1,15 +1,8 @@
 # Sources
 
-The trusted pages for this prompt. At each "Learn" review, read them and compare them with `template/` and `README.md`.
+The trusted pages for this prompt. At each "Learn" review, the `sources-review` skill compares them with `template/` and `README.md`. The steps are in `.claude/skills/sources-review/SKILL.md`.
 
-Rules for the review:
-
-- Write the findings to `kb/research/sources-YYYY-MM-DD.md`. The file starts with "Status: research, not approved".
-- The owner runs `/doctor prompt-audit template` (only the owner can type it). Add its findings to the same research file.
-- Propose three changes at most. Each one names the source, the rule it changes, and why.
-- Do not edit `template/` or `README.md` in the review. A change needs the owner's yes first.
-- After the review, set the "Last read" date below.
-- Only the owner adds a page to this list.
+Only the owner adds a page to this list.
 
 Last read: 2026-11-13 (see `kb/research/sources-2026-11-13.md` for which pages were read in full)
 
