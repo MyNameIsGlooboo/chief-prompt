@@ -5,6 +5,7 @@ The trusted pages for this prompt. At each "Learn" review, read them and compare
 Rules for the review:
 
 - Write the findings to `kb/research/sources-YYYY-MM-DD.md`. The file starts with "Status: research, not approved".
+- The owner runs `/doctor prompt-audit template` (only the owner can type it). Add its findings to the same research file.
 - Propose three changes at most. Each one names the source, the rule it changes, and why.
 - Do not edit `template/` or `README.md` in the review. A change needs the owner's yes first.
 - After the review, set the "Last read" date below.
