@@ -1,4 +1,4 @@
-"""Check the template files and the prompt. No model, no network, standard library only.
+"""Check the template files, the setup steps and the line to paste. No model, no network, standard library only.
 
 Run from the repo root:  python scripts/check.py
 Exit code 0 means every check passed.
@@ -17,6 +17,8 @@ RULES_MAX_LINES = 100
 RULES_FILE = ".claude/rules/chief-of-staff.md"
 UPDATE_SKILL = ".claude/skills/chief-update/SKILL.md"
 PROMPT_MAX_WORDS = 400
+SETUP_FILE = "template/SETUP.md"
+SOURCE_REPO = "https://github.com/MyNameIsGlooboo/chief-prompt"
 
 REQUIRED_DENY = ["Read(.env)", "Read(.env.*)", "Read(/.secrets/**)"]
 REQUIRED_ASK = [
@@ -37,9 +39,9 @@ REQUIRED_IMPORTS = ["@kb/status.md", "@kb/todo.md"]
 REVIEWER_TOOLS = "tools: Read, Grep, Glob"
 # This repo uses its own prompt. These root files must be exact copies of the template.
 ROOT_COPIES = [RULES_FILE, UPDATE_SKILL, ".claude/settings.json", ".claude/agents/reviewer.md", ".gitignore"]
-# Files the prompt must name, so the agent copies all of them.
+# Files the setup steps must name, so the agent copies all of them.
 PROMPT_MUST_NAME = [RULES_FILE, UPDATE_SKILL, "CLAUDE.md", ".gitignore", ".claude/settings.json", ".claude/agents/reviewer.md"]
-# The prompt must tell the agent to keep files that already exist.
+# The setup steps must tell the agent to keep files that already exist.
 PROMPT_MUST_SAY = ["never replace", "Add only what is missing"]
 
 failures = []
@@ -148,21 +150,30 @@ def check_gitignore():
 
 
 def check_prompt():
+    # The one line in README.md that the user pastes.
     text = read(ROOT / "README.md")
-    if text is None:
+    if text is not None:
+        blocks = re.findall(r"```text\n(.*?)```", text, re.DOTALL)
+        check(len(blocks) == 1, "README.md has exactly one block to paste")
+        if len(blocks) == 1:
+            line = blocks[0].strip()
+            check("\n" not in line, "the block to paste is one line")
+            check(SOURCE_REPO in line, "the line to paste names the source repo")
+            check(SETUP_FILE in line, f"the line to paste points to {SETUP_FILE}")
+            check("My language:" in line, "the line to paste names a language")
+    # The steps that the line points to.
+    steps = read(ROOT / SETUP_FILE)
+    if steps is None:
         return
-    blocks = re.findall(r"```text\n(.*?)```", text, re.DOTALL)
-    check(len(blocks) == 1, "README.md has exactly one prompt block")
-    if len(blocks) != 1:
-        return
-    prompt = blocks[0]
-    words = len(prompt.split())
-    check(words <= PROMPT_MAX_WORDS, f"prompt is at most {PROMPT_MAX_WORDS} words ({words})")
+    words = len(steps.split())
+    check(words <= PROMPT_MAX_WORDS, f"{SETUP_FILE} is at most {PROMPT_MAX_WORDS} words ({words})")
+    for number in range(1, 6):
+        check(re.search(rf"^{number}\. ", steps, re.MULTILINE) is not None, f"{SETUP_FILE} has step {number}")
     for name in PROMPT_MUST_NAME:
-        check(name in prompt, f"prompt names {name}")
-    check("/template" in prompt or "template/" in prompt, "prompt points to the template folder")
+        check(name in steps, f"{SETUP_FILE} names {name}")
+    check("template/" in steps, f"{SETUP_FILE} points to the template folder")
     for phrase in PROMPT_MUST_SAY:
-        check(phrase in prompt, f"prompt says '{phrase}'")
+        check(phrase in steps, f"{SETUP_FILE} says '{phrase}'")
 
 
 def check_root_copies():
