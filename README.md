@@ -82,7 +82,9 @@ Sources (checked 9 to 12 Nov 2026):
 
 This part is for the owner of this repo. If you only use the prompt, skip it.
 
-**Check.** `python scripts/check.py` checks the template files and the prompt: valid JSON, every deny and ask rule present for Bash and PowerShell, the reviewer's tools line, `CLAUDE.md` under 100 lines with both imports, and the prompt under 400 words. It uses no model and costs nothing. GitHub Actions runs it on every push and pull request.
+**Check.** `python scripts/check.py` checks the template files and the prompt: valid JSON, every deny and ask rule present for Bash and PowerShell, the reviewer's tools line, `CLAUDE.md` under 100 lines with both imports, the prompt under 400 words, and the root copies equal to the template. It uses no model and costs nothing. GitHub Actions runs it on every push and pull request.
+
+**This repo uses its own prompt.** The root `CLAUDE.md` imports `template/CLAUDE.md` and adds a few rules for this repo. The root `.claude/settings.json`, `.claude/agents/reviewer.md` and `.gitignore` are exact copies of the template files, and the check script fails if they differ. The `kb/` folder holds this repo's own status, tasks, and decisions.
 
 **Feedback from my own projects.** This is only for me. It is not in the template, and other users do not need it. In my own projects I add this line to the "Learn" part of `CLAUDE.md`:
 

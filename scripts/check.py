@@ -32,6 +32,8 @@ REQUIRED_ASK = [
 REQUIRED_GITIGNORE = [".env", ".env.*", ".secrets/", ".obsidian/"]
 REQUIRED_IMPORTS = ["@kb/status.md", "@kb/todo.md"]
 REVIEWER_TOOLS = "tools: Read, Grep, Glob"
+# This repo uses its own prompt. These root files must be exact copies of the template.
+ROOT_COPIES = [".claude/settings.json", ".claude/agents/reviewer.md", ".gitignore"]
 # Files the prompt must name, so the agent copies all of them.
 PROMPT_MUST_NAME = ["CLAUDE.md", ".gitignore", ".claude/settings.json", ".claude/agents/reviewer.md"]
 
@@ -120,7 +122,24 @@ def check_prompt():
     check("/template" in prompt or "template/" in prompt, "prompt points to the template folder")
 
 
+def check_root_copies():
+    for name in ROOT_COPIES:
+        source = read(TEMPLATE / name)
+        copy = read(ROOT / name)
+        if source is not None and copy is not None:
+            check(source == copy, f"{name} in the repo root is the same as in template/")
+    text = read(ROOT / "CLAUDE.md")
+    if text is not None:
+        lines = text.splitlines()
+        check("@template/CLAUDE.md" in lines, "root CLAUDE.md imports @template/CLAUDE.md")
+        last = [line for line in lines if line.strip()][-len(REQUIRED_IMPORTS):]
+        check(last == REQUIRED_IMPORTS, "root CLAUDE.md ends with @kb/status.md and @kb/todo.md")
+    for name in ["status.md", "todo.md"]:
+        check((ROOT / "kb" / name).is_file(), f"kb/{name} exists")
+
+
 check_settings()
+check_root_copies()
 check_reviewer()
 check_claude_md()
 check_gitignore()
