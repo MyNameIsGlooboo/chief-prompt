@@ -1,10 +1,10 @@
 # The Chief Prompt
 
-**One short prompt and five ready files that turn one [Claude Code](https://code.claude.com) session into a chief of staff for a project, new or existing.** You talk to one agent. It interviews you until it can write a plan, keeps the memory in files, asks you for decisions in short cards, and never sends, publishes, deploys, pays, deletes, or merges for you without your approval.
+**One short prompt and six ready files that turn one [Claude Code](https://code.claude.com) session into a chief of staff for a project, new or existing.** You talk to one agent. It interviews you until it can write a plan, keeps the memory in files, asks you for decisions in short cards, and never sends, publishes, deploys, pays, deletes, or merges for you without your approval.
 
 In this prompt, an *agent* means a Claude Code agent (subagent): a separate worker with its own memory and its own rules, defined in `.claude/agents/`.
 
-**Why it is short:** there are many guides on this topic, so this repo collects them in one place. The prompt stays short and gives the agent few instructions and no skills to start with. It does not depend on how smart a model is, so it should need fewer updates when models get stronger or weaker. Models change, so re-check it from time to time.
+**Why it is short:** there are many guides on this topic, so this repo collects them in one place. The prompt stays short and gives the agent few instructions and only one skill to start with, for updates. It does not depend on how smart a model is, so it should need fewer updates when models get stronger or weaker. Models change, so re-check it from time to time.
 
 ## How to use it
 
@@ -15,13 +15,13 @@ In this prompt, an *agent* means a Claude Code agent (subagent): a separate work
 1. In your current session, ask: *"Save everything important from this session to files."* (The old session does not have this prompt yet, so ask in plain words.)
 2. Type `/clear`.
 
-**Project that already has files?** The prompt replaces none of your files. It adds one file of its own, `.claude/rules/chief-of-staff.md`, and adds only the missing lines to your `CLAUDE.md`, `.gitignore` and `.claude/settings.json`. Commit your work first, so `git diff` shows you what was added.
+**Project that already has files?** The prompt replaces none of your files. It adds two files of its own, `.claude/rules/chief-of-staff.md` and `.claude/skills/chief-update/SKILL.md`, and adds only the missing lines to your `CLAUDE.md`, `.gitignore` and `.claude/settings.json`. Commit your work first, so `git diff` shows you what was added.
 
 Then paste this as your first message in the project:
 
 ```text
 Do these steps in order.
-1. Setup files. Clone https://github.com/MyNameIsGlooboo/chief-prompt to a temporary folder, use its template/ folder, then remove the clone. If git is missing, stop and ask me. Copy .claude/rules/chief-of-staff.md exactly, and replace an older copy of it. It is now your rules for this project: you are my chief of staff, one main agent, no team. For the other four files: if the file does not exist here, copy it exactly. If it exists, never replace or rewrite it. Add only what is missing and tell me what you added. CLAUDE.md: the Language part, and the two @kb lines at the end. If it still holds old chief-of-staff rules from an earlier version of this prompt, show me those lines and ask before you remove them. .gitignore: the missing lines. .claude/settings.json: the missing deny and ask rules. .claude/agents/reviewer.md: if another one exists, ask me. Show me .claude/settings.json and wait for my yes before you commit these files.
+1. Setup files. Clone https://github.com/MyNameIsGlooboo/chief-prompt to a temporary folder, use its template/ folder, then remove the clone. If git is missing, stop and ask me. Copy .claude/rules/chief-of-staff.md and .claude/skills/chief-update/SKILL.md exactly, and replace older copies of them. The first is now your rules for this project: you are my chief of staff, one main agent, no team. For the other four files: if the file does not exist here, copy it exactly. If it exists, never replace or rewrite it. Add only what is missing and tell me what you added. CLAUDE.md: the Language part, and the two @kb lines at the end. If it still holds old chief-of-staff rules from an earlier version of this prompt, show me those lines and ask before you remove them. .gitignore: the missing lines. .claude/settings.json: the missing deny and ask rules. .claude/agents/reviewer.md: if another one exists, ask me. Show me .claude/settings.json and wait for my yes before you commit these files.
 2. Language. Set the Language line in CLAUDE.md to: simple English (A2). Talk to me that way from now on.
 3. Memory folder. Create kb/ as your rules describe: status.md, todo.md, done.md, lessons.md, approved/ and research/. Keep any of these that already exist. In a new status.md, set Last review to today's date.
 4. Git. If this folder already is a git repo, keep it and work on a branch. If it is not, or it has no remote, ask me: local only, or GitHub too? For GitHub, ask private (suggested) or public, and get my yes before you create the repo or push. Tell me if gh (the GitHub command-line tool) is missing or not logged in.
@@ -30,11 +30,12 @@ Do these steps in order.
 
 **Change step 2 to your own language and level** (for example "simple Spanish"). A2 is a basic English level.
 
-**What the prompt copies:** five files from the [`template/`](template) folder of this repo. The agent does not write them itself, so every project gets the same rules.
+**What the prompt copies:** six files from the [`template/`](template) folder of this repo. The agent does not write them itself, so every project gets the same rules.
 
-One file belongs to the prompt. The agent copies it exactly, and an update replaces it:
+Two files belong to the prompt. The agent copies them exactly, and an update replaces them:
 
 - [`.claude/rules/chief-of-staff.md`](template/.claude/rules/chief-of-staff.md): the standing rules. Claude Code loads every file in `.claude/rules/` in every session.
+- [`.claude/skills/chief-update/SKILL.md`](template/.claude/skills/chief-update/SKILL.md): the update skill. It runs only when you type `/chief-update`.
 
 Four files belong to you. The agent copies one only if you do not have it. If you have it, the agent adds the missing lines and changes nothing else:
 
@@ -43,9 +44,9 @@ Four files belong to you. The agent copies one only if you do not have it. If yo
 - [`.claude/agents/reviewer.md`](template/.claude/agents/reviewer.md): the read-only reviewer.
 - [`.gitignore`](template/.gitignore)
 
-You can also copy the five files into an empty project by hand before you paste the prompt. Then the agent finds nothing to add.
+You can also copy the six files into an empty project by hand before you paste the prompt. Then the agent finds nothing to add.
 
-**What you should see:** the agent copies or completes the five files, tells you what it added, shows you `.claude/settings.json` for approval, asks about git, then interviews you card by card. When the plan is approved, these files exist: `CLAUDE.md`, `.gitignore`, `.claude/rules/chief-of-staff.md`, `.claude/settings.json`, `.claude/agents/reviewer.md`, `kb/status.md`, `kb/todo.md`, `kb/approved/decisions.md`, `kb/approved/plan.md`. Then open a new session, so Claude Code loads the new settings and the reviewer.
+**What you should see:** the agent copies or completes the six files, tells you what it added, shows you `.claude/settings.json` for approval, asks about git, then interviews you card by card. When the plan is approved, these files exist: `CLAUDE.md`, `.gitignore`, `.claude/rules/chief-of-staff.md`, `.claude/skills/chief-update/SKILL.md`, `.claude/settings.json`, `.claude/agents/reviewer.md`, `kb/status.md`, `kb/todo.md`, `kb/approved/decisions.md`, `kb/approved/plan.md`. Then open a new session, so Claude Code loads the new settings and the reviewer.
 
 **Optional:** open the project folder in [Obsidian](https://obsidian.md) to read `CLAUDE.md` and the files in `kb/` as notes.
 
@@ -53,7 +54,9 @@ Start fresh each new day, each new big task, or when the chat gets long or the t
 
 ### Update a project to a newer version of the prompt
 
-Copy [`.claude/rules/chief-of-staff.md`](template/.claude/rules/chief-of-staff.md) from this repo over the one in your project. It is the only file an update replaces, so your `CLAUDE.md`, your `.gitignore` and your settings stay as they are. Then ask the agent: "Compare `.claude/settings.json` with the template in the chief-prompt repo and add the missing rules." Open a new session after that.
+Type `/chief-update` in the project. The skill gets the newest `template/` from this repo and replaces the two files the prompt owns: the rules file and the skill itself. In your own files it adds only what is missing: new deny and ask rules in `.claude/settings.json`, new lines in `.gitignore`. If the reviewer file differs, it asks you which one to keep. Then it shows you `git diff` and waits for your yes before it commits. Open a new session after that.
+
+**No `/chief-update` in your project yet?** Paste the prompt again once. It adds the skill.
 
 **Project set up with the first version of the prompt?** There the rules are still inside `CLAUDE.md`, and there is no `.claude/rules/` folder. Paste the prompt again. The agent adds the rules file, then shows you the old chief-of-staff parts in `CLAUDE.md` and asks before it removes them. Your Language line, your own rules and the two `@kb` lines stay. Do not skip this: if both copies stay, they will disagree after the next update.
 
@@ -68,6 +71,7 @@ Copy [`.claude/rules/chief-of-staff.md`](template/.claude/rules/chief-of-staff.m
 - Most of it is **advice**. The agent can drift from it. The exception is `.claude/settings.json`: Claude Code itself blocks reads of `.env`, `.env.*` and `.secrets/`, and asks you before a push, a merge, a delete, or an edit of `kb/approved/plan.md`. Settings cannot enforce "ask before sending email, messages, files or data to other people or outside services, publishing, deploying, or paying", so that stays advice. "Sending" means out of the project: to other people, or to an outside service such as an upload. A reply to you or a brief to a background agent needs no approval.
 - For a finished branch, the agent asks once for the whole step: push and PR (if you use GitHub), merge, and delete of the merged branch. It asks only after the check has passed and, for code, after the reviewer found no blocking problem. Branches from parallel writers are not part of this: you read and merge those yourself. Claude Code can still show its own prompt for each of these commands, because of the ask rules in `.claude/settings.json`.
 - In a project that already has files, "add only what is missing" is advice too. The agent merges by hand and can make a mistake, so read `git diff` before the first commit. The prompt does not check if your own `CLAUDE.md` rules disagree with the chief-of-staff rules. This path has not been tested on a real existing project yet.
+- The update skill is advice too, and it has not been tested on a real project yet. It takes the files from the main branch of this repo at that moment, so you trust what is there. It never removes a rule or a line of yours, so a rule that the template dropped stays until you remove it. Read `git diff` before you say yes.
 - The settings have limits. The read block covers Claude's file tools and shell commands that Claude Code knows, such as `cat`. It does not cover a script that opens the file itself. The delete rule matches `rm` and `Remove-Item`, not every other way to delete a file. For a block on every process, turn on the Claude Code sandbox.
 - The interview is advice too. The agent may stop asking too early. If the plan feels thin, say "interview me more".
 - The reviewer is read-only only because of its `tools: Read, Grep, Glob` line. Nothing stops the agent from editing that file later.
@@ -98,9 +102,9 @@ Sources (checked 9 to 12 Nov 2026):
 
 This part is for the owner of this repo. If you only use the prompt, skip it.
 
-**Check.** `python scripts/check.py` checks the template files and the prompt: valid JSON, every deny and ask rule present for Bash and PowerShell, the reviewer's tools line, the rules file under 100 lines and with no import, `CLAUDE.md` with the Language line and both imports, the prompt under 400 words, and the root copies equal to the template. It uses no model and costs nothing. GitHub Actions runs it on every push and pull request.
+**Check.** `python scripts/check.py` checks the template files and the prompt: valid JSON, every deny and ask rule present for Bash and PowerShell, the reviewer's tools line, the rules file under 100 lines and with no import, the update skill (its name, that only the user can start it, and that it names both files it replaces), `CLAUDE.md` with the Language line and both imports, the prompt under 400 words, and the root copies equal to the template. It uses no model and costs nothing. GitHub Actions runs it on every push and pull request.
 
-**This repo uses its own prompt.** The root `CLAUDE.md` holds only the rules for this repo. The root `.claude/rules/chief-of-staff.md`, `.claude/settings.json`, `.claude/agents/reviewer.md` and `.gitignore` are exact copies of the template files, and the check script fails if they differ. The `kb/` folder holds this repo's own status, tasks, and decisions.
+**This repo uses its own prompt.** The root `CLAUDE.md` holds only the rules for this repo. The root `.claude/rules/chief-of-staff.md`, `.claude/skills/chief-update/SKILL.md`, `.claude/settings.json`, `.claude/agents/reviewer.md` and `.gitignore` are exact copies of the template files, and the check script fails if they differ. The `kb/` folder holds this repo's own status, tasks, and decisions.
 
 **Feedback from my own projects.** This is only for me. It is not in the template, and other users do not need it. In my own projects I add this line to `CLAUDE.md`:
 

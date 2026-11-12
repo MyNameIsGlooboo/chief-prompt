@@ -15,6 +15,7 @@ TEMPLATE = ROOT / "template"
 CLAUDE_MD_MAX_LINES = 100
 RULES_MAX_LINES = 100
 RULES_FILE = ".claude/rules/chief-of-staff.md"
+UPDATE_SKILL = ".claude/skills/chief-update/SKILL.md"
 PROMPT_MAX_WORDS = 400
 
 REQUIRED_DENY = ["Read(.env)", "Read(.env.*)", "Read(/.secrets/**)"]
@@ -35,9 +36,9 @@ REQUIRED_GITIGNORE = [".env", ".env.*", ".secrets/", ".obsidian/"]
 REQUIRED_IMPORTS = ["@kb/status.md", "@kb/todo.md"]
 REVIEWER_TOOLS = "tools: Read, Grep, Glob"
 # This repo uses its own prompt. These root files must be exact copies of the template.
-ROOT_COPIES = [RULES_FILE, ".claude/settings.json", ".claude/agents/reviewer.md", ".gitignore"]
+ROOT_COPIES = [RULES_FILE, UPDATE_SKILL, ".claude/settings.json", ".claude/agents/reviewer.md", ".gitignore"]
 # Files the prompt must name, so the agent copies all of them.
-PROMPT_MUST_NAME = [RULES_FILE, "CLAUDE.md", ".gitignore", ".claude/settings.json", ".claude/agents/reviewer.md"]
+PROMPT_MUST_NAME = [RULES_FILE, UPDATE_SKILL, "CLAUDE.md", ".gitignore", ".claude/settings.json", ".claude/agents/reviewer.md"]
 # The prompt must tell the agent to keep files that already exist.
 PROMPT_MUST_SAY = ["never replace", "Add only what is missing"]
 
@@ -103,6 +104,29 @@ def check_rules():
     check("Talk to me in" not in text, "the rules file has no Language line (it lives in CLAUDE.md)")
 
 
+def check_update_skill():
+    text = read(TEMPLATE / UPDATE_SKILL)
+    if text is None:
+        return
+    match = re.match(r"---\n(.*?)\n---\n", text, re.DOTALL)
+    check(match is not None, "the update skill starts with frontmatter")
+    if match is None:
+        return
+    lines = match.group(1).splitlines()
+    check("name: chief-update" in lines, "the update skill is named chief-update")
+    check(any(line.startswith("description: ") for line in lines), "the update skill has a description")
+    # The skill changes files, so only the user may start it.
+    check("disable-model-invocation: true" in lines, "only the user can start the update skill")
+    body = text[match.end():]
+    check("github.com/MyNameIsGlooboo/chief-prompt" in body, "the update skill names the source repo")
+    # The two files the prompt owns. The skill must replace both, or it never gets newer itself.
+    for name in [RULES_FILE, UPDATE_SKILL]:
+        check(name in body, f"the update skill replaces {name}")
+    # The files that belong to the project. The skill must name each one.
+    for name in ["CLAUDE.md", ".gitignore", ".claude/settings.json", ".claude/agents/reviewer.md"]:
+        check(name in body, f"the update skill handles {name}")
+
+
 def check_claude_md():
     text = read(TEMPLATE / "CLAUDE.md")
     if text is None:
@@ -163,6 +187,7 @@ check_settings()
 check_root_copies()
 check_reviewer()
 check_rules()
+check_update_skill()
 check_claude_md()
 check_gitignore()
 check_prompt()
