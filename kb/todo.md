@@ -4,7 +4,8 @@
 - [x] Split the template so the prompt works in a project that already has files. Done when: the rules are in `template/.claude/rules/chief-of-staff.md`, the prompt says to keep existing files, and `python scripts/check.py` passes.
 - [x] Add a changelog and a "Last updated" line. Done when: `CHANGELOG.md` exists, the line is at the top of `README.md`, and `python scripts/check.py` passes.
 - [ ] One-line install. Done when: the five steps are in a file in `template/`, `README.md` shows one line to paste, and `python scripts/check.py` passes.
-- [ ] Draft the autopilot mode. Done when: `kb/research/autopilot.md` exists and the owner has said yes or no to each open point.
+- [x] Draft the autopilot mode. Done when: `kb/research/autopilot.md` exists and the owner has said yes or no to each open point.
+- [ ] Build the autopilot skill. Done when: the permission mode for a run with no questions is checked in the Claude Code docs, `template/.claude/skills/chief-autopilot/SKILL.md` exists, `README.md` describes the mode and its limits, and `python scripts/check.py` passes.
 - [ ] Decide on a GIF for `README.md`, after the one-line install. Done when: a yes or no is in `kb/approved/decisions.md`.
 - [ ] Try the prompt in one project that already has a `CLAUDE.md`, a `.gitignore` and settings. Done when: `git diff` there shows only added lines, and what went wrong is in kb/chief-prompt-lessons.md.
 - [ ] Try `/chief-update` in one project after the next template change. Done when: `git diff` there shows the new rules file and only added lines in the other files, and what went wrong is in kb/chief-prompt-lessons.md.

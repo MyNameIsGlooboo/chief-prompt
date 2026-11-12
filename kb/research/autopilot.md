@@ -42,6 +42,8 @@ A mode the user turns on. It is never the default. The agent works through `kb/t
 
 ## Open points for the owner
 
+The owner said yes to all six proposals on 2026-11-13 (see `kb/approved/decisions.md`). The skill itself is not written yet.
+
 1. **A failed check.** There is no task limit, so what happens when the proof fails? Proposal: the agent tries to fix it twice. If it still fails, it reverts that task's commits with `git revert`, marks the task as blocked in the questions file, and goes to the next task. Work that fails the proof never stays on `autopilot`.
 2. **One branch, no merge, no delete.** As described above. Yes or no?
 3. **Tasks that depend on a blocked task.** Proposal: skip them too, and say so in the questions file.
