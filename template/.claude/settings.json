@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(.env)",
+      "Read(.env.*)",
+      "Read(/.secrets/**)"
+    ],
+    "ask": [
+      "Bash(git push *)",
+      "Bash(git merge *)",
+      "Bash(gh pr merge *)",
+      "Bash(gh repo create *)",
+      "Bash(rm *)",
+      "PowerShell(git push *)",
+      "PowerShell(git merge *)",
+      "PowerShell(gh pr merge *)",
+      "PowerShell(gh repo create *)",
+      "PowerShell(Remove-Item *)",
+      "Edit(/kb/approved/plan.md)"
+    ]
+  }
+}
