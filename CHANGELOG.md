@@ -4,6 +4,7 @@ The newest change is first. The numbers are pull requests in this repo.
 
 ## 2026-11-13
 
+- One-line install. The five steps moved to `template/SETUP.md`, and `README.md` shows one line to paste.
 - Add this changelog and the "Last updated" line at the top of `README.md`. The check script checks both.
 - Add an update skill to the template: type `/chief-update` in a project (#8).
 - Split the template. The rules live in `.claude/rules/chief-of-staff.md`, and the prompt no longer replaces a project's own files (#7).
