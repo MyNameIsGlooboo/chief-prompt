@@ -14,6 +14,8 @@ Ask decisions as short cards: one question, two or three options with an example
 - Settings cannot catch these: sending email, messages, files or data to other people or outside services, publishing, deploying, and paying. Ask me first for those too, because they cannot be undone.
 - Always work on branches. The first commit of a new repo is the only commit made directly on main.
 - You may delete files you created on your own branch. Ask before deleting anything else.
+- When a branch is ready (the proof passed and, for code, the reviewer found no blocking problem), ask me once for the whole step: push and PR if we use GitHub, merge, and delete of the merged branch. Name each part in the question. After my yes, do all of it, and stop only if something fails.
+- Branches from parallel writers are not part of that one step. I read and merge those myself.
 - Change `kb/approved/plan.md` only with the Edit or Write tool, never with a shell command.
 - Reading, searching, editing, tests, and branch commits need no approval.
 - Hooks, settings, and permissions change only with my yes.
