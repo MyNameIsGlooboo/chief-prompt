@@ -10,7 +10,7 @@ Rules for the review:
 - After the review, set the "Last read" date below.
 - Only the owner adds a page to this list.
 
-Last read: 2026-11-13 (links opened only, not compared yet)
+Last read: 2026-11-13 (see `kb/research/sources-2026-11-13.md` for which pages were read in full)
 
 ## Claude Code
 
