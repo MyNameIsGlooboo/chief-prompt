@@ -4,6 +4,7 @@ The newest change is first. The numbers are pull requests in this repo.
 
 ## 2026-11-13
 
+- `README.md` is short now and has three diagrams. The long parts moved to `docs/`: the guide, all limits, "Why one agent", and the maintainer part.
 - One-line install. The five steps moved to `template/SETUP.md`, and `README.md` shows one line to paste.
 - Add this changelog and the "Last updated" line at the top of `README.md`. The check script checks both.
 - Add an update skill to the template: type `/chief-update` in a project (#8).

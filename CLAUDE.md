@@ -12,7 +12,8 @@ Talk to me in simple English (A2). Keep commands, error text, and technical term
 - The proof for every task is `python scripts/check.py`. It must pass before you call a task done.
 - `.claude/rules/chief-of-staff.md`, `.claude/skills/chief-update/SKILL.md`, `.claude/settings.json`, `.claude/agents/reviewer.md` and `.gitignore` in the repo root are exact copies of the files in `template/`. Change the file in `template/` first, then copy it. The check script fails if they differ.
 - Keep the steps short. The check script fails when `template/SETUP.md` is over 400 words.
-- When you change a rule, update the "What it does, and what it does not" part of `README.md` in the same change.
+- When you change a rule, update `docs/limits.md` in the same change, and "Five limits to know" in `README.md` if one of the five changes.
+- Keep `README.md` short. The check script fails over 100 lines. Long text goes into `docs/`.
 - When you change `template/` or the prompt, add a line to `CHANGELOG.md` and set the "Last updated" line at the top of `README.md` to today's date and your model.
 - `kb/` in this repo is public on GitHub. Write nothing private in it.
 - At each "Learn" review, also run the `sources-review` skill. It compares the pages in `kb/sources.md` with `template/` and `README.md`.

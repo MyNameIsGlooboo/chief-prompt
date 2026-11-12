@@ -17,6 +17,10 @@ RULES_MAX_LINES = 100
 RULES_FILE = ".claude/rules/chief-of-staff.md"
 UPDATE_SKILL = ".claude/skills/chief-update/SKILL.md"
 PROMPT_MAX_WORDS = 400
+README_MAX_LINES = 100
+README_DIAGRAMS = 3
+# The long parts of the README live here. README.md must link to each one.
+DOCS = ["docs/guide.md", "docs/limits.md", "docs/why-one-agent.md", "docs/maintainer.md"]
 SETUP_FILE = "template/SETUP.md"
 SOURCE_REPO = "https://github.com/MyNameIsGlooboo/chief-prompt"
 
@@ -214,7 +218,26 @@ def check_changelog():
     check(match.group(1) == dates[0], f"the 'Last updated' date is the newest date in CHANGELOG.md ({dates[0]})")
 
 
+def check_readme():
+    text = read(ROOT / "README.md")
+    if text is None:
+        return
+    lines = text.splitlines()
+    check(len(lines) <= README_MAX_LINES, f"README.md is at most {README_MAX_LINES} lines ({len(lines)})")
+    diagrams = len(re.findall(r"^```mermaid$", text, re.MULTILINE))
+    check(diagrams == README_DIAGRAMS, f"README.md has {README_DIAGRAMS} diagrams ({diagrams})")
+    for name in DOCS:
+        if read(ROOT / name) is not None:
+            check(f"]({name})" in text, f"README.md links to {name}")
+    # A link in docs/ that starts at the repo root is broken on GitHub.
+    for name in DOCS:
+        doc = read(ROOT / name) or ""
+        bad = re.findall(r"\]\((?:template|kb|scripts|\.claude|README\.md|CHANGELOG\.md|LICENSE)", doc)
+        check(not bad, f"{name} has no link that starts at the repo root")
+
+
 check_settings()
+check_readme()
 check_changelog()
 check_root_copies()
 check_reviewer()

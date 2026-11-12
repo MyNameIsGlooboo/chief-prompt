@@ -1,9 +1,9 @@
 ---
 name: sources-review
-description: Compare the trusted pages in kb/sources.md with template/ and README.md, and write the findings to kb/research/. Use at each "Learn" review in this repo, or when the owner asks if the prompt is still up to date.
+description: Compare the trusted pages in kb/sources.md with template/, README.md and docs/, and write the findings to kb/research/. Use at each "Learn" review in this repo, or when the owner asks if the prompt is still up to date.
 ---
 
-Check that the prompt still agrees with its sources. Write findings and proposals only. Do not edit `template/` or `README.md` in this skill.
+Check that the prompt still agrees with its sources. Write findings and proposals only. Do not edit `template/`, `README.md` or `docs/` in this skill.
 
 ## Steps
 
@@ -15,7 +15,7 @@ Check that the prompt still agrees with its sources. Write findings and proposal
    - `template/.claude/agents/reviewer.md` with the frontmatter reference on the Subagents page.
    - `template/.claude/rules/chief-of-staff.md` and `template/CLAUDE.md` with the Memory page (size, imports, `.claude/rules/`) and with the newest "Prompting Claude ..." guide (approval wording, subagents, cautions that pile up).
    - `template/.claude/skills/chief-update/SKILL.md` with the frontmatter reference on the Skills page.
-   - `README.md`, part "What it does, and what it does not", with Best practices, most of all its part "What you can stop doing".
+   - `docs/limits.md` and "Five limits to know" in `README.md`, with Best practices, most of all its part "What you can stop doing".
    - The engineering blog: read the titles, and open a post only if it is about agent memory, subagents, or instruction files.
 5. Ask the owner to run `/doctor prompt-audit template`, because only the owner can type it. Add its findings to the report. If the owner skips it, say so in the report.
 6. Write `kb/research/sources-YYYY-MM-DD.md` with today's date. The first line is "Status: research, not approved". Use these parts, in this order:
@@ -31,7 +31,7 @@ Check that the prompt still agrees with its sources. Write findings and proposal
 
 - Log each yes or no in `kb/approved/decisions.md`.
 - A change in `template/` counts as code: give the `reviewer` agent the diff and the approved proposal before the merge.
-- When a rule changes, update "What it does, and what it does not" in `README.md` in the same change.
+- When a rule changes, update `docs/limits.md` in the same change, and "Five limits to know" in `README.md` if one of the five changes.
 
 ## Limits
 
