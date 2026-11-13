@@ -1,6 +1,6 @@
 # The Chief Prompt
 
-Last updated: 2026-11-13, with Claude Fable 5.2. See [CHANGELOG.md](CHANGELOG.md).
+Last updated: 2026-11-14, with Claude Fable 5.2. See [CHANGELOG.md](CHANGELOG.md).
 
 **Paste one line. One [Claude Code](https://code.claude.com) session becomes the chief of staff of your project, new or existing.**
 

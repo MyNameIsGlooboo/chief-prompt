@@ -2,7 +2,7 @@ Status: research, not approved
 
 # One prompt for the ship step
 
-Draft from 2026-11-14. Nothing in `template/` is changed yet.
+Draft from 2026-11-14. The owner approved the rule on 2026-11-14, after the test below. See `kb/approved/decisions.md`. The wording in the rules file is longer than the one in this draft, because the reviewer found four problems.
 
 ## The problem
 
@@ -29,6 +29,10 @@ Almost all of it is the ship step. The rules say "ask me once for the whole step
 The Permissions page says ask rules apply when any part of a compound command matches. Its example is that an ask rule for `git clean` "still prompts you" for `cd /tmp && git clean -f`. The page does not say how many questions a command with several matching parts gives. One question for the whole command is inferred. If that is right, one command with all parts joined by `&&` should give one question in place of two to four. Claude Code still asks, so nothing becomes less safe.
 
 Not tested: nobody has counted the questions for one joined command yet.
+
+## Test, 2026-11-14
+
+PR 19 of this repo (this draft) was shipped with one joined command: push, create the PR, `gh pr checks --watch`, squash merge with branch delete, and the sync of local main. All parts worked at the first try. The owner got one question from Claude Code, in bypass mode. The checks took about 20 seconds, so long checks are still not tested.
 
 ## Possible wording
 

@@ -2,6 +2,10 @@
 
 The newest change is first. The numbers are pull requests in this repo.
 
+## 2026-11-14
+
+- The ship step runs as one joined command (push, PR, checks, merge, branch delete), so Claude Code asks once and not for each part. Reason: the ask rules also ask in bypass mode, and the session logs of this repo showed 53 push and 29 merge commands that each matched an ask rule.
+
 ## 2026-11-13
 
 - Second sources review, three changes. The install keeps a project's `AGENTS.md` alive: it adds `@AGENTS.md` to a new `CLAUDE.md`, and the install and the update ask first when `CLAUDE.md` already existed. The autopilot warning names the setting `denyInsteadOfPrompting`. The reviewer starts without `CLAUDE.md` and the rules file (`omitClaudeMd: true`).

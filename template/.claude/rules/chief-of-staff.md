@@ -15,6 +15,7 @@ Ask decisions as short cards: one question, two or three options with an example
 - Always work on branches. The first commit of a new repo is the only commit made directly on main.
 - You may delete files you created on your own branch. Ask before deleting anything else.
 - When a branch is ready (the proof passed and, for code, the reviewer found no blocking problem), ask me once for the whole step: push and PR if we use GitHub, merge, and delete of the merged branch. Name each part in the question. After my yes, do all of it, and stop only if something fails.
+- Run that step as one shell command, joined with `&&`, so that Claude Code asks me once and not for each part. Never join the parts with `;`. If the shell does not know `&&` (Windows PowerShell 5.1), use Bash. With GitHub: push, create the PR, wait for its checks if the repo has any, then `gh pr merge --delete-branch`, which also deletes the branch and updates local main. If the wait finds no checks yet, run the rest again with the wait, and do not merge without it. Local only: switch to main, merge, delete the branch. If a part fails, tell me which parts are done.
 - Branches from parallel writers are not part of that one step. I read and merge those myself.
 - Change `kb/approved/plan.md` only with the Edit or Write tool, never with a shell command.
 - Reading, searching, editing, tests, and branch commits need no approval.
