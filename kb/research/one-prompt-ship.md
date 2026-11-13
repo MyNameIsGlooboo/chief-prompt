@@ -30,6 +30,10 @@ The Permissions page says ask rules apply when any part of a compound command ma
 
 Not tested: nobody has counted the questions for one joined command yet.
 
+## Test, 2026-11-14
+
+PR 19 of this repo (this draft) was shipped with one joined command: push, create the PR, `gh pr checks --watch`, squash merge with branch delete, and the sync of local main. All parts worked at the first try. The owner got one question from Claude Code, in bypass mode. The checks took about 20 seconds, so long checks are still not tested.
+
 ## Possible wording
 
 In `template/.claude/rules/chief-of-staff.md`, part "Approval", one new line after the line "When a branch is ready ...":
