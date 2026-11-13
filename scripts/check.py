@@ -20,8 +20,8 @@ AUTOPILOT_SKILL = ".claude/skills/chief-autopilot/SKILL.md"
 # Autopilot runs with nobody there. Its skill must name each action it never does.
 AUTOPILOT_NEVER = ["git push", "git merge", "gh pr merge", "gh repo create", "deleting a file", "kb/approved/plan.md", "publishing", "deploying", "paying"]
 PROMPT_MAX_WORDS = 400
-README_MAX_LINES = 100
-README_DIAGRAMS = 3
+README_MAX_LINES = 140
+README_DIAGRAMS = 4
 # The long parts of the README live here. README.md must link to each one.
 DOCS = ["docs/guide.md", "docs/limits.md", "docs/why-one-agent.md", "docs/maintainer.md"]
 SETUP_FILE = "template/SETUP.md"

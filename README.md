@@ -67,12 +67,38 @@ flowchart LR
     alone ~~~ asks ~~~ never
 ```
 
+## Autopilot
+
+Away for some hours? Autopilot makes the agent work through `kb/todo.md` alone. You turn it on. It is never on by itself.
+
+```mermaid
+flowchart LR
+    A["You type<br/>/chief-autopilot"] --> B["Agent works alone<br/>on branch autopilot"]
+    B --> C["Task done:<br/>one commit"]
+    B --> Q["Open question:<br/>own pick, written<br/>to a file"]
+    B --> X["Needs your yes:<br/>skipped and listed"]
+    C --> D["You are back:<br/>say hello"]
+    Q --> D
+    X --> D
+    D --> E["Report and<br/>one card per question"]
+    E --> F["Check, reviewer,<br/>your one yes"]
+```
+
+How to use it:
+
+1. Check that `kb/todo.md` has open tasks and that all your work is committed.
+2. Switch Claude Code to auto mode. A permission question from Claude Code stops the run until you answer, and auto mode asks the fewest.
+3. Type `/chief-autopilot`. The agent tells you which tasks it will try and which it cannot do alone. Then you can go.
+4. When you are back, say "hello", also in a new session. The agent shows you its report and asks one card per question.
+5. Say yes or no to the `autopilot` branch, as for any other branch.
+
+The agent does not push, merge, delete files, or change the approved plan in this mode. It does not send, publish, deploy, or pay. All of this is advice, and one run is one session. Read [the guide](docs/guide.md#autopilot) first.
+
 ## Each day
 
 - **Start:** type `/clear` or open a new session, and say "hello". The state is in `CLAUDE.md`, `kb/status.md` and `kb/todo.md`, so the agent continues from "Next step".
 - **Not sure?** Ask "Is everything saved?"
 - **Newer version of the prompt:** type `/chief-update` in the project.
-- **Away for some hours?** Type `/chief-autopilot`. The agent works through `kb/todo.md` alone on a local `autopilot` branch. It does not push, merge, or delete, and it saves its questions for you. Read [the guide](docs/guide.md#autopilot) first.
 
 ## Five limits to know
 

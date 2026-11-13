@@ -11,5 +11,5 @@
 - [ ] Try `/chief-update` in one project after the next template change. Done when: `git diff` there shows the new rules file and only added lines in the other files, and what went wrong is in kb/chief-prompt-lessons.md.
 - [ ] Use the prompt in one real project. Done when: the files in "What you should see" in docs/guide.md exist there, and the lines of its kb/chief-prompt-lessons.md are added to kb/chief-prompt-lessons.md in this repo.
 - [ ] Try `/chief-autopilot` in one real project with three small tasks. Done when: the `autopilot` branch has one commit per task, nothing was pushed or deleted, and what went wrong is in kb/chief-prompt-lessons.md.
-- [ ] Give autopilot its own section in `README.md`, with a diagram and how to use it. Done when: the section and its diagram are in `README.md`, and `python scripts/check.py` passes.
+- [x] Give autopilot its own section in `README.md`, with a diagram and how to use it. Done when: the section and its diagram are in `README.md`, and `python scripts/check.py` passes.
 - [ ] Make the update as simple as the install: one line to paste. Done when: `README.md` shows one update line, the update skill works from that line, and `python scripts/check.py` passes.

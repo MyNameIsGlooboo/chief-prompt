@@ -4,6 +4,7 @@ The newest change is first. The numbers are pull requests in this repo.
 
 ## 2026-11-13
 
+- `README.md` has its own "Autopilot" section, with a diagram and the steps to use it. The check script now allows 140 lines and 4 diagrams.
 - Add the autopilot skill to the template: type `/chief-autopilot`. Local only, one `autopilot` branch, no push, no merge, no delete.
 - `README.md` is short now and has three diagrams. The long parts moved to `docs/`: the guide, all limits, "Why one agent", and the maintainer part.
 - One-line install. The five steps moved to `template/SETUP.md`, and `README.md` shows one line to paste.
