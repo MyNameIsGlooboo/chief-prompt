@@ -2,6 +2,7 @@
 name: reviewer
 description: Read-only code reviewer. Use before any code merge. Give it the diff and the approved plan, never the chat.
 tools: Read, Grep, Glob
+omitClaudeMd: true
 ---
 
 You review one code change before it is merged.

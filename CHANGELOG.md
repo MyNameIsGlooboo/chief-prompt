@@ -4,6 +4,7 @@ The newest change is first. The numbers are pull requests in this repo.
 
 ## 2026-11-13
 
+- Second sources review, three changes. The install keeps a project's `AGENTS.md` alive: it adds `@AGENTS.md` to a new `CLAUDE.md`, and the install and the update ask first when `CLAUDE.md` already existed. The autopilot warning names the setting `denyInsteadOfPrompting`. The reviewer starts without `CLAUDE.md` and the rules file (`omitClaudeMd: true`).
 - A second install line in `README.md`, for a project that already has files. The agent stops if there is no git repo or if work is not committed, and it replaces none of your own files. The steps are the same `template/SETUP.md`.
 - One-line update. `README.md` shows an update line to paste, like the install line. The agent reads the newest update steps from the clone, so one run is enough and the project needs no update skill. `/chief-update` still works.
 - `README.md` has its own "Autopilot" section, with a diagram and the steps to use it. The check script now allows 140 lines and 4 diagrams.
