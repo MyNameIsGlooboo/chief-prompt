@@ -93,7 +93,7 @@ flowchart LR
 How to use it:
 
 1. Check that `kb/todo.md` has open tasks and that all your work is committed.
-2. Switch Claude Code to auto mode. A permission question from Claude Code stops the run until you answer, and auto mode asks the fewest.
+2. Switch Claude Code to auto mode. A permission question from Claude Code stops the run until you answer, and auto mode asks the fewest. The setting `denyInsteadOfPrompting` makes Claude Code refuse the action and go on. Read [limits](docs/limits.md) before you use it.
 3. Type `/chief-autopilot`. The agent tells you which tasks it will try and which it cannot do alone. Then you can go.
 4. When you are back, say "hello", also in a new session. The agent shows you its report and asks one card per question.
 5. Say yes or no to the `autopilot` branch, as for any other branch.

@@ -4,7 +4,7 @@ The trusted pages for this prompt. At each "Learn" review, the `sources-review` 
 
 Only the owner adds a page to this list.
 
-Last read: 2026-11-13 (see `kb/research/sources-2026-11-13.md` for which pages were read in full)
+Last read: 2026-11-13 (see `kb/research/sources-2026-11-13-2.md` for which pages were read in full)
 
 ## Claude Code
 

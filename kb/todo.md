@@ -14,3 +14,4 @@
 - [x] Give autopilot its own section in `README.md`, with a diagram and how to use it. Done when: the section and its diagram are in `README.md`, and `python scripts/check.py` passes.
 - [x] Make the update as simple as the install: one line to paste. Done when: `README.md` shows one update line, the update skill works from that line, and `python scripts/check.py` passes.
 - [x] One-line install for a project that already has files. Done when: `README.md` shows the line, and `python scripts/check.py` passes.
+- [ ] Decide on the three proposals in `kb/research/sources-2026-11-13-2.md` (done: three times yes), and run `/doctor prompt-audit template`. Done when: each proposal has a yes or no in `kb/approved/decisions.md`, and the audit findings are in the research file.

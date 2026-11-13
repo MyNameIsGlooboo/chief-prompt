@@ -15,7 +15,7 @@ I am still here for these steps, so you may ask.
 1. If this folder is not a git repo, stop and tell me. Run `git status --short`. If it shows anything, stop and ask me.
 2. If `kb/research/autopilot-questions.md` exists, an earlier run is not closed: do the part "When I am back" and do not start a new run. If only a branch named `autopilot` exists, stop and tell me to merge or delete it first. If neither exists, create the branch `autopilot` from the current branch and switch to it.
 3. Create `kb/research/autopilot-questions.md`. Its first line is "Status: research, not approved". In `kb/status.md`, set Next step to: "Autopilot ran. Read `kb/research/autopilot-questions.md` and do the part 'When I am back' in `.claude/skills/chief-autopilot/SKILL.md`." Keep that line until I am back, because a new session finds the run only through it. Commit both files.
-4. Tell me in one message: the open tasks you will try, the tasks you cannot do alone and why, and this warning: "A permission question from Claude Code stops the run until you answer. Auto mode asks the fewest questions." Then start. Do not wait for an answer.
+4. Tell me in one message: the open tasks you will try, the tasks you cannot do alone and why, and this warning: "A permission question from Claude Code stops the run until you answer. Auto mode asks the fewest questions. With `"denyInsteadOfPrompting": true` under `permissions` in a file passed with `--settings`, Claude Code refuses such an action and the run goes on (v2.1.319 or later). While it is on, a push, a merge and a delete are refused also after your yes, so do 'When I am back' in a session without it." Only I set that setting, never you. Then start. Do not wait for an answer.
 
 ## The questions file
 
