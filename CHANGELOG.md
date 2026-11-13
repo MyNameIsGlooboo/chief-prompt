@@ -4,7 +4,7 @@ The newest change is first. The numbers are pull requests in this repo.
 
 ## 2026-11-13
 
-- A second install line in `README.md`, for a project that already has files. The agent checks `git status` first and replaces none of your files. The steps are the same `template/SETUP.md`.
+- A second install line in `README.md`, for a project that already has files. The agent stops if there is no git repo or if work is not committed, and it replaces none of your own files. The steps are the same `template/SETUP.md`.
 - One-line update. `README.md` shows an update line to paste, like the install line. The agent reads the newest update steps from the clone, so one run is enough and the project needs no update skill. `/chief-update` still works.
 - `README.md` has its own "Autopilot" section, with a diagram and the steps to use it. The check script now allows 140 lines and 4 diagrams.
 - Add the autopilot skill to the template: type `/chief-autopilot`. Local only, one `autopilot` branch, no push, no merge, no delete.

@@ -34,7 +34,7 @@ The agent reads its steps from [`template/SETUP.md`](template/SETUP.md). When th
 **Project that already has files?** Paste this line instead. The prompt replaces none of your files:
 
 ```text
-This project already has files. Run git status first, and if it shows work that is not committed, stop and ask me to commit it. Then clone https://github.com/MyNameIsGlooboo/chief-prompt to a temporary folder outside this project, read its template/SETUP.md, and do the steps in it. Replace none of my files. My language: simple English (A2).
+This project already has files. If this folder is not a git repo, stop and ask me to run git init and commit my files first. Then run git status, and if it shows work that is not committed, stop and ask me to commit it. Then clone https://github.com/MyNameIsGlooboo/chief-prompt to a temporary folder outside this project, read its template/SETUP.md, and do the steps in it. Replace none of my own files. My language: simple English (A2).
 ```
 
 Did you already talk in a session about the project? Read [the guide](docs/guide.md) first.

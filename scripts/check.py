@@ -197,7 +197,9 @@ def check_prompt():
         for line in existing:
             # The agent must not start while work is not committed, or git diff cannot show what it added.
             check("git status" in line, "the install line for a project with files checks git status first")
-            check("Replace none of my files" in line, "the install line for a project with files says to replace no file")
+            check("Replace none of my own files" in line, "the install line for a project with files says to replace no file of the user")
+            # In a folder with no git repo, git status fails and nothing can show or undo what the agent added.
+            check("not a git repo" in line, "the install line for a project with files stops when there is no git repo")
         # The update line reads the update skill from the clone, so its steps are always the newest.
         update_file = "template/" + UPDATE_SKILL
         update = [block for block in blocks if update_file in block]
