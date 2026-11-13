@@ -15,7 +15,7 @@ The owner started the run with two new tasks. They are the last two lines of `kb
 
 The check script allows 100 lines and exactly 3 diagrams. `README.md` had 97 lines. An autopilot section with a diagram and the steps needs about 20 lines, and the update line needs some more.
 
-- Option a (my pick): raise the limit to 130 lines and 4 diagrams, in `scripts/check.py` and in the rule in root `CLAUDE.md`.
+- Option a (my pick): raise the limit to 140 lines and 4 diagrams, in `scripts/check.py` and in the rule in root `CLAUDE.md`.
 - Option b: keep 100 lines. Then the "Who decides" diagram or the "Five limits" part must move to `docs/`.
 - Reason for my pick: you asked for the section in the README, and you picked the other parts of the README yourself in PR 11. I did not want to remove one of them without you.
 - Option b is not built.
