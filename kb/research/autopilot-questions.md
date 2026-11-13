@@ -19,3 +19,14 @@ The check script allows 100 lines and exactly 3 diagrams. `README.md` had 97 lin
 - Option b: keep 100 lines. Then the "Who decides" diagram or the "Five limits" part must move to `docs/`.
 - Reason for my pick: you asked for the section in the README, and you picked the other parts of the README yourself in PR 11. I did not want to remove one of them without you.
 - Option b is not built.
+
+### Question 2: what is the "one line" for the update?
+
+The update was already one command, `/chief-update`. But it was not as simple as the install: a project with no skill had to paste the install line first, and a project with an old skill had to run the update two times in two sessions.
+
+- Option a (my pick): one update line to paste, like the install line. The agent clones the repo and reads the newest `template/.claude/skills/chief-update/SKILL.md` from the clone. So the steps are always the newest, one run is enough, and it works in a project that has no update skill. `/chief-update` stays as a second way.
+- Option b: the same line, and remove the update skill from the template, so there is only one way. Then the steps move to a new file `template/UPDATE.md`. This deletes a template file, and old projects keep a dead skill.
+- Option c: change nothing, because `/chief-update` is already one line.
+- Reason for my pick: it is the same pattern as the install, it removes the "run it twice" case, and it deletes nothing.
+- Option b is not built: it needs a delete, and autopilot never deletes.
+- The check script now wants exactly two blocks to paste in `README.md`: the install line and the update line.
