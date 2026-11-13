@@ -16,6 +16,7 @@ Talk to me in simple English (A2). Keep commands, error text, and technical term
 - Keep `README.md` short. The check script fails over 140 lines. Long text goes into `docs/`.
 - When you change `template/` or the prompt, add a line to `CHANGELOG.md` and set the "Last updated" line at the top of `README.md` to today's date and your model.
 - `kb/` in this repo is public on GitHub. Write nothing private in it.
+- When the first line of `README.md` changes, check the "About" text of the GitHub repo (`gh repo view --json description`) and propose the same words. The text is public, so ask before you change it.
 - At each "Learn" review, also run the `sources-review` skill. It compares the pages in `kb/sources.md` with `template/` and `README.md`.
 - If a rule in the template fails or confuses you, add a dated line to `kb/chief-prompt-lessons.md`: the rule, what happened, and why. Never prune this file.
 
