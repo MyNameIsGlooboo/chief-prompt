@@ -4,6 +4,7 @@ The newest change is first. The numbers are pull requests in this repo.
 
 ## 2026-11-14
 
+- Five small edits from the prompt audit (`/doctor prompt-audit template`). A search, and opening or reading a page, is not "sending", so the agent does not ask before it (rules file and autopilot skill). A background agent's result comes in a few lines, not in exactly three, and names what it could not check. The reviewer names what it could not check after "No blocking problems". The reviewer also works from the goal of the change when the plan does not cover it. The rule against `;` in the ship command now gives its reason.
 - `.claude/settings.json` has four allow rules: `mcp__claude-in-chrome__*`, `mcp__Claude_Browser__*`, `WebFetch` and `WebSearch`. Claude Code no longer asks before the agent browses, clicks, or runs JavaScript in a page. The install and the update add them to a settings file that already exists. Read the new point in [docs/limits.md](docs/limits.md) first: your own Chrome has your logins.
 - The ship step runs as one joined command (push, PR, checks, merge, branch delete), so Claude Code asks once and not for each part. Reason: the ask rules also ask in bypass mode, and the session logs of this repo showed 53 push and 29 merge commands that each matched an ask rule.
 
