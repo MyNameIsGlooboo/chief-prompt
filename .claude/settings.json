@@ -1,5 +1,11 @@
 {
   "permissions": {
+    "allow": [
+      "mcp__claude-in-chrome__*",
+      "mcp__Claude_Browser__*",
+      "WebFetch",
+      "WebSearch"
+    ],
     "deny": [
       "Read(.env)",
       "Read(.env.*)",

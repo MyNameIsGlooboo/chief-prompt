@@ -60,7 +60,7 @@ Commit your work, then paste the update line from the [README](../README.md#upda
 Clone https://github.com/MyNameIsGlooboo/chief-prompt to a temporary folder outside this project, read its template/.claude/skills/chief-update/SKILL.md, and do the steps in it.
 ```
 
-The agent reads the newest update steps from this repo and replaces the three files the prompt owns: the rules file, the autopilot skill, and the update skill. In your own files it adds only what is missing: new deny and ask rules in `.claude/settings.json`, new lines in `.gitignore`. If the reviewer file differs, it asks you which one to keep. Then it shows you `git diff` and waits for your yes before it commits. Open a new session after that.
+The agent reads the newest update steps from this repo and replaces the three files the prompt owns: the rules file, the autopilot skill, and the update skill. In your own files it adds only what is missing: new allow, deny and ask rules in `.claude/settings.json`, new lines in `.gitignore`. If the reviewer file differs, it asks you which one to keep. Then it shows you `git diff` and waits for your yes before it commits. Open a new session after that.
 
 **The line works in every project.** It needs no update skill in the project, and one run is enough, because the steps come from this repo and not from your older copy.
 
