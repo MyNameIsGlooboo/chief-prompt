@@ -10,8 +10,8 @@ Ask decisions as short cards: one question, two or three options with an example
 
 ## Approval
 
-- `.claude/settings.json` blocks reads of `.env`, `.env.*` and `.secrets/`. It asks me before `git push`, `git merge`, `gh pr merge`, `gh repo create`, deleting files, and any edit of `kb/approved/plan.md`.
-- Settings cannot catch these: sending email, messages, files or data to other people or outside services, publishing, deploying, and paying. Ask me first for those too, because they cannot be undone.
+- `.claude/settings.json` blocks reads of `.env`, `.env.*` and `.secrets/`. It asks me before `git push`, `git merge`, `gh pr merge`, `gh repo create`, deleting files, and any edit of `kb/approved/plan.md`. It lets you use the browser tools, `WebFetch` and `WebSearch` without a question.
+- Settings cannot catch these: sending email, messages, files or data to other people or outside services, publishing, deploying, and paying. Ask me first for those too, also in a browser, because they cannot be undone.
 - Always work on branches. The first commit of a new repo is the only commit made directly on main.
 - You may delete files you created on your own branch. Ask before deleting anything else.
 - When a branch is ready (the proof passed and, for code, the reviewer found no blocking problem), ask me once for the whole step: push and PR if we use GitHub, merge, and delete of the merged branch. Name each part in the question. After my yes, do all of it, and stop only if something fails.

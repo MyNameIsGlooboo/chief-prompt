@@ -119,7 +119,7 @@ The agent replaces the three files that the prompt owns and adds only the missin
 
 1. **Most of it is advice.** The agent can drift from it. Only the rules in `.claude/settings.json` are enforced by Claude Code.
 2. **You trust this repo.** The install line and the update line make the agent follow the steps on the main branch at that moment. Read [`template/SETUP.md`](template/SETUP.md) first if that matters to you.
-3. **"Ask before sending, publishing, deploying, or paying" is not enforced.** Settings cannot catch these.
+3. **"Ask before sending, publishing, deploying, or paying" is not enforced.** Settings cannot catch these, and the browser tools run with no question from Claude Code.
 4. **The settings have holes.** A script that opens `.env` itself is not blocked, and `rm` is not the only way to delete a file.
 5. **It is young.** It has not been tested over weeks of real use, or on a real project that already has files.
 

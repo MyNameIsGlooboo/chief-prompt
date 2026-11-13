@@ -18,7 +18,7 @@ Three files belong to the prompt, and you replace them. All other files belong t
    - `.claude/rules/chief-of-staff.md`
    - `.claude/skills/chief-autopilot/SKILL.md`
    - `.claude/skills/chief-update/SKILL.md` (this file). Finish this run with the steps you have already read. Remember if the copy in this project was missing or different before you replaced it.
-4. `.claude/settings.json`: add each deny rule and ask rule that is in the template and not here. Keep every rule that is here, also one that is not in the template. If the file is missing, copy it.
+4. `.claude/settings.json`: add each allow rule, deny rule and ask rule that is in the template and not here. Keep every rule that is here, also one that is not in the template. If the file is missing, copy it.
 5. `.gitignore`: add the lines that are in the template and not here. If the file is missing, copy it.
 6. `.claude/agents/reviewer.md`: if it is missing, copy it. If it differs from the template, show me the difference and ask which one to keep. Do not merge the two yourself.
 7. `CLAUDE.md`: check that it has the Language part and that it ends with the lines `@kb/status.md` and `@kb/todo.md`. Add what is missing and change nothing else. If it still holds chief-of-staff rules from the first version of the prompt (parts such as "Approval", "Save as you go" or "Learn"), show me those parts and ask before you remove them. If the project has an `AGENTS.md` and `CLAUDE.md` does not import it, tell me that Claude Code reads only `CLAUDE.md` when both files exist, and ask me if you should add `@AGENTS.md` as its first line.

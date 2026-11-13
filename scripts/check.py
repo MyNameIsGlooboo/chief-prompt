@@ -41,7 +41,9 @@ REQUIRED_ASK = [
     "PowerShell(Remove-Item *)",
     "Edit(/kb/approved/plan.md)",
 ]
-REQUIRED_GITIGNORE = [".env", ".env.*", ".secrets/", ".obsidian/"]
+# The only allow rules: the two browsers, WebFetch and WebSearch. Any other allow rule fails the check.
+REQUIRED_ALLOW = ["mcp__claude-in-chrome__*", "mcp__Claude_Browser__*", "WebFetch", "WebSearch"]
+REQUIRED_GITIGNORE =[".env", ".env.*", ".secrets/", ".obsidian/"]
 REQUIRED_IMPORTS = ["@kb/status.md", "@kb/todo.md"]
 REVIEWER_TOOLS = "tools: Read, Grep, Glob"
 # This repo uses its own prompt. These root files must be exact copies of the template.
@@ -83,7 +85,10 @@ def check_settings():
         check(rule in deny, f"settings.json denies {rule}")
     for rule in REQUIRED_ASK:
         check(rule in ask, f"settings.json asks before {rule}")
-    check("allow" not in permissions, "settings.json has no allow rules")
+    allow = permissions.get("allow", [])
+    for rule in REQUIRED_ALLOW:
+        check(rule in allow, f"settings.json allows {rule}")
+    check(set(allow) <= set(REQUIRED_ALLOW), "settings.json has no other allow rules")
 
 
 def check_reviewer():
