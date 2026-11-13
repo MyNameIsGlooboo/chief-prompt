@@ -184,14 +184,20 @@ def check_prompt():
     text = read(ROOT / "README.md")
     if text is not None:
         blocks = [block.strip() for block in re.findall(r"```text\n(.*?)```", text, re.DOTALL)]
-        check(len(blocks) == 2, "README.md has exactly two blocks to paste: install and update")
+        check(len(blocks) == 3, "README.md has exactly three blocks to paste: install, install with files, and update")
+        # Two install lines: one for a new project, one for a project that already has files.
         install = [block for block in blocks if SETUP_FILE in block]
-        check(len(install) == 1, f"one block to paste points to {SETUP_FILE}")
-        if len(install) == 1:
-            line = install[0]
-            check("\n" not in line, "the install block is one line")
-            check(SOURCE_REPO in line, "the install line names the source repo")
-            check("My language:" in line, "the install line names a language")
+        check(len(install) == 2, f"two blocks to paste point to {SETUP_FILE}")
+        for line in install:
+            check("\n" not in line, "an install block is one line")
+            check(SOURCE_REPO in line, "an install line names the source repo")
+            check("My language:" in line, "an install line names a language")
+        existing = [line for line in install if "already has files" in line]
+        check(len(existing) == 1, "one install line is for a project that already has files")
+        for line in existing:
+            # The agent must not start while work is not committed, or git diff cannot show what it added.
+            check("git status" in line, "the install line for a project with files checks git status first")
+            check("Replace none of my files" in line, "the install line for a project with files says to replace no file")
         # The update line reads the update skill from the clone, so its steps are always the newest.
         update_file = "template/" + UPDATE_SKILL
         update = [block for block in blocks if update_file in block]

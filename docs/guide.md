@@ -13,9 +13,13 @@ In this prompt, an *agent* means a Claude Code agent (subagent): a separate work
 1. In your current session, ask: *"Save everything important from this session to files."* (The old session does not have this prompt yet, so ask in plain words.)
 2. Type `/clear`.
 
-**Project that already has files?** The prompt replaces none of your files. It adds three files of its own, `.claude/rules/chief-of-staff.md`, `.claude/skills/chief-update/SKILL.md` and `.claude/skills/chief-autopilot/SKILL.md`, and adds only the missing lines to your `CLAUDE.md`, `.gitignore` and `.claude/settings.json`. Commit your work first, so `git diff` shows you what was added.
+**Project that already has files?** The prompt replaces none of your files. It adds three files of its own, `.claude/rules/chief-of-staff.md`, `.claude/skills/chief-update/SKILL.md` and `.claude/skills/chief-autopilot/SKILL.md`, and adds only the missing lines to your `CLAUDE.md`, `.gitignore` and `.claude/settings.json`. The [README](../README.md#start) has a second line for this case. It makes the agent run `git status` first and stop if you have work that is not committed, so `git diff` shows you what was added:
 
-Then paste the line from the [README](../README.md) as your first message in the project.
+```text
+This project already has files. Run git status first, and if it shows work that is not committed, stop and ask me to commit it. Then clone https://github.com/MyNameIsGlooboo/chief-prompt to a temporary folder outside this project, read its template/SETUP.md, and do the steps in it. Replace none of my files. My language: simple English (A2).
+```
+
+Paste your line as your first message in the project.
 
 **The steps are in [`template/SETUP.md`](../template/SETUP.md):** setup files, language, memory folder, git, interview. The agent reads them from this repo, so you paste one line and not five steps. Read the file first if you want to know what the agent will do.
 
