@@ -17,8 +17,8 @@ Check that the prompt still agrees with its sources. Write findings and proposal
    - `template/.claude/skills/chief-update/SKILL.md` with the frontmatter reference on the Skills page.
    - `docs/limits.md` and "Five limits to know" in `README.md`, with Best practices, most of all its part "What you can stop doing".
    - The engineering blog: read the titles, and open a post only if it is about agent memory, subagents, or instruction files.
-5. Ask the owner to run `/doctor prompt-audit template`, because only the owner can type it. Add its findings to the report. If the owner skips it, say so in the report.
-6. Write `kb/research/sources-YYYY-MM-DD.md` with today's date. The first line is "Status: research, not approved". Use these parts, in this order:
+5. Ask the owner to run `/doctor prompt-audit template`, because only the owner can type it. Add its findings to the report. If the owner skips it, say so in the report. Do not wait for it: write the report, and add the findings when they come.
+6. Write `kb/research/sources-YYYY-MM-DD.md` with today's date. If that file exists already, do not change it: add `-2` to the new name. The first line is "Status: research, not approved". Use these parts, in this order:
    - Short result: is any rule broken, yes or no.
    - What was read: a table with each page and how much of it was read. Be honest about pages read in part or not at all.
    - What matches: no change needed.
