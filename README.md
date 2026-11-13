@@ -98,12 +98,21 @@ The agent does not push, merge, delete files, or change the approved plan in thi
 
 - **Start:** type `/clear` or open a new session, and say "hello". The state is in `CLAUDE.md`, `kb/status.md` and `kb/todo.md`, so the agent continues from "Next step".
 - **Not sure?** Ask "Is everything saved?"
-- **Newer version of the prompt:** type `/chief-update` in the project.
+
+## Update
+
+Is there a newer version of the prompt? Commit your work, then paste this line in the project:
+
+```text
+Clone https://github.com/MyNameIsGlooboo/chief-prompt to a temporary folder outside this project, read its template/.claude/skills/chief-update/SKILL.md, and do the steps in it.
+```
+
+The agent replaces the three files that the prompt owns and adds only the missing lines to your own files. It shows you `git diff` and waits for your yes. You can also type `/chief-update`, but the line always uses the newest steps. More in [the guide](docs/guide.md#update-a-project-to-a-newer-version-of-the-prompt).
 
 ## Five limits to know
 
 1. **Most of it is advice.** The agent can drift from it. Only the rules in `.claude/settings.json` are enforced by Claude Code.
-2. **You trust this repo.** The one line makes the agent follow the steps on the main branch at that moment. Read [`template/SETUP.md`](template/SETUP.md) first if that matters to you.
+2. **You trust this repo.** The install line and the update line make the agent follow the steps on the main branch at that moment. Read [`template/SETUP.md`](template/SETUP.md) first if that matters to you.
 3. **"Ask before sending, publishing, deploying, or paying" is not enforced.** Settings cannot catch these.
 4. **The settings have holes.** A script that opens `.env` itself is not blocked, and `rm` is not the only way to delete a file.
 5. **It is young.** It has not been tested over weeks of real use, or on a real project that already has files.

@@ -4,6 +4,7 @@ The newest change is first. The numbers are pull requests in this repo.
 
 ## 2026-11-13
 
+- One-line update. `README.md` shows an update line to paste, like the install line. The agent reads the newest update steps from the clone, so one run is enough and the project needs no update skill. `/chief-update` still works.
 - `README.md` has its own "Autopilot" section, with a diagram and the steps to use it. The check script now allows 140 lines and 4 diagrams.
 - Add the autopilot skill to the template: type `/chief-autopilot`. Local only, one `autopilot` branch, no push, no merge, no delete.
 - `README.md` is short now and has three diagrams. The long parts moved to `docs/`: the guide, all limits, "Why one agent", and the maintainer part.
