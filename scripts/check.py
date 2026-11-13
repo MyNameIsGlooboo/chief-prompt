@@ -20,8 +20,8 @@ AUTOPILOT_SKILL = ".claude/skills/chief-autopilot/SKILL.md"
 # Autopilot runs with nobody there. Its skill must name each action it never does.
 AUTOPILOT_NEVER = ["git push", "git merge", "gh pr merge", "gh repo create", "deleting a file", "kb/approved/plan.md", "publishing", "deploying", "paying"]
 PROMPT_MAX_WORDS = 400
-README_MAX_LINES = 100
-README_DIAGRAMS = 3
+README_MAX_LINES = 140
+README_DIAGRAMS = 4
 # The long parts of the README live here. README.md must link to each one.
 DOCS = ["docs/guide.md", "docs/limits.md", "docs/why-one-agent.md", "docs/maintainer.md"]
 SETUP_FILE = "template/SETUP.md"
@@ -134,6 +134,8 @@ def check_update_skill():
     # The files that belong to the project. The skill must name each one.
     for name in ["CLAUDE.md", ".gitignore", ".claude/settings.json", ".claude/agents/reviewer.md"]:
         check(name in body, f"the update skill handles {name}")
+    # The update line makes the agent read this file from a clone. The skill must not clone a second time.
+    check("use that clone" in body, "the update skill uses the clone it was read from")
 
 
 def check_autopilot_skill():
@@ -181,14 +183,32 @@ def check_prompt():
     # The one line in README.md that the user pastes.
     text = read(ROOT / "README.md")
     if text is not None:
-        blocks = re.findall(r"```text\n(.*?)```", text, re.DOTALL)
-        check(len(blocks) == 1, "README.md has exactly one block to paste")
-        if len(blocks) == 1:
-            line = blocks[0].strip()
-            check("\n" not in line, "the block to paste is one line")
-            check(SOURCE_REPO in line, "the line to paste names the source repo")
-            check(SETUP_FILE in line, f"the line to paste points to {SETUP_FILE}")
-            check("My language:" in line, "the line to paste names a language")
+        blocks = [block.strip() for block in re.findall(r"```text\n(.*?)```", text, re.DOTALL)]
+        check(len(blocks) == 3, "README.md has exactly three blocks to paste: install, install with files, and update")
+        # Two install lines: one for a new project, one for a project that already has files.
+        install = [block for block in blocks if SETUP_FILE in block]
+        check(len(install) == 2, f"two blocks to paste point to {SETUP_FILE}")
+        for line in install:
+            check("\n" not in line, "an install block is one line")
+            check(SOURCE_REPO in line, "an install line names the source repo")
+            check("My language:" in line, "an install line names a language")
+        existing = [line for line in install if "already has files" in line]
+        check(len(existing) == 1, "one install line is for a project that already has files")
+        for line in existing:
+            # The agent must not start while work is not committed, or git diff cannot show what it added.
+            check("git status" in line, "the install line for a project with files checks git status first")
+            check("Replace none of my own files" in line, "the install line for a project with files says to replace no file of the user")
+            # In a folder with no git repo, git status fails and nothing can show or undo what the agent added.
+            check("not a git repo" in line, "the install line for a project with files stops when there is no git repo")
+        # The update line reads the update skill from the clone, so its steps are always the newest.
+        update_file = "template/" + UPDATE_SKILL
+        update = [block for block in blocks if update_file in block]
+        check(len(update) == 1, f"one block to paste points to {update_file}")
+        if len(update) == 1:
+            line = update[0]
+            check("\n" not in line, "the update block is one line")
+            check(SOURCE_REPO in line, "the update line names the source repo")
+            check(SETUP_FILE not in line, "the update line does not point to the setup steps")
     # The steps that the line points to.
     steps = read(ROOT / SETUP_FILE)
     if steps is None:

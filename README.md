@@ -31,7 +31,13 @@ flowchart LR
 
 The agent reads its steps from [`template/SETUP.md`](template/SETUP.md). When the plan is approved, open a new session.
 
-Does your project already have files, or did you already talk in a session? Read [the guide](docs/guide.md) first. The prompt replaces none of your files.
+**Project that already has files?** Paste this line instead. The prompt replaces none of your files:
+
+```text
+This project already has files. If this folder is not a git repo, stop and ask me to run git init and commit my files first. Then run git status, and if it shows work that is not committed, stop and ask me to commit it. Then clone https://github.com/MyNameIsGlooboo/chief-prompt to a temporary folder outside this project, read its template/SETUP.md, and do the steps in it. Replace none of my own files. My language: simple English (A2).
+```
+
+Did you already talk in a session about the project? Read [the guide](docs/guide.md) first.
 
 ## How one task goes
 
@@ -67,17 +73,52 @@ flowchart LR
     alone ~~~ asks ~~~ never
 ```
 
+## Autopilot
+
+Away for some hours? Autopilot makes the agent work through `kb/todo.md` alone. You turn it on. It is never on by itself.
+
+```mermaid
+flowchart LR
+    A["You type<br/>/chief-autopilot"] --> B["Agent works alone<br/>on branch autopilot"]
+    B --> C["Task done:<br/>one commit"]
+    B --> Q["Open question:<br/>own pick, written<br/>to a file"]
+    B --> X["Needs your yes:<br/>skipped and listed"]
+    C --> D["You are back:<br/>say hello"]
+    Q --> D
+    X --> D
+    D --> E["Report and<br/>one card per question"]
+    E --> F["Check, reviewer,<br/>your one yes"]
+```
+
+How to use it:
+
+1. Check that `kb/todo.md` has open tasks and that all your work is committed.
+2. Switch Claude Code to auto mode. A permission question from Claude Code stops the run until you answer, and auto mode asks the fewest.
+3. Type `/chief-autopilot`. The agent tells you which tasks it will try and which it cannot do alone. Then you can go.
+4. When you are back, say "hello", also in a new session. The agent shows you its report and asks one card per question.
+5. Say yes or no to the `autopilot` branch, as for any other branch.
+
+The agent does not push, merge, delete files, or change the approved plan in this mode. It does not send, publish, deploy, or pay. All of this is advice, and one run is one session. Read [the guide](docs/guide.md#autopilot) first.
+
 ## Each day
 
 - **Start:** type `/clear` or open a new session, and say "hello". The state is in `CLAUDE.md`, `kb/status.md` and `kb/todo.md`, so the agent continues from "Next step".
 - **Not sure?** Ask "Is everything saved?"
-- **Newer version of the prompt:** type `/chief-update` in the project.
-- **Away for some hours?** Type `/chief-autopilot`. The agent works through `kb/todo.md` alone on a local `autopilot` branch. It does not push, merge, or delete, and it saves its questions for you. Read [the guide](docs/guide.md#autopilot) first.
+
+## Update
+
+Is there a newer version of the prompt? Commit your work, then paste this line in the project:
+
+```text
+Clone https://github.com/MyNameIsGlooboo/chief-prompt to a temporary folder outside this project, read its template/.claude/skills/chief-update/SKILL.md, and do the steps in it.
+```
+
+The agent replaces the three files that the prompt owns and adds only the missing lines to your own files. It shows you `git diff` and waits for your yes. You can also type `/chief-update`, but the line always uses the newest steps. More in [the guide](docs/guide.md#update-a-project-to-a-newer-version-of-the-prompt).
 
 ## Five limits to know
 
 1. **Most of it is advice.** The agent can drift from it. Only the rules in `.claude/settings.json` are enforced by Claude Code.
-2. **You trust this repo.** The one line makes the agent follow the steps on the main branch at that moment. Read [`template/SETUP.md`](template/SETUP.md) first if that matters to you.
+2. **You trust this repo.** The install line and the update line make the agent follow the steps on the main branch at that moment. Read [`template/SETUP.md`](template/SETUP.md) first if that matters to you.
 3. **"Ask before sending, publishing, deploying, or paying" is not enforced.** Settings cannot catch these.
 4. **The settings have holes.** A script that opens `.env` itself is not blocked, and `rm` is not the only way to delete a file.
 5. **It is young.** It has not been tested over weeks of real use, or on a real project that already has files.

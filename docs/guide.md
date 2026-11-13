@@ -13,9 +13,13 @@ In this prompt, an *agent* means a Claude Code agent (subagent): a separate work
 1. In your current session, ask: *"Save everything important from this session to files."* (The old session does not have this prompt yet, so ask in plain words.)
 2. Type `/clear`.
 
-**Project that already has files?** The prompt replaces none of your files. It adds three files of its own, `.claude/rules/chief-of-staff.md`, `.claude/skills/chief-update/SKILL.md` and `.claude/skills/chief-autopilot/SKILL.md`, and adds only the missing lines to your `CLAUDE.md`, `.gitignore` and `.claude/settings.json`. Commit your work first, so `git diff` shows you what was added.
+**Project that already has files?** The prompt replaces none of your files. It adds three files of its own, `.claude/rules/chief-of-staff.md`, `.claude/skills/chief-update/SKILL.md` and `.claude/skills/chief-autopilot/SKILL.md`, and adds only the missing lines to your `CLAUDE.md`, `.gitignore` and `.claude/settings.json`. The [README](../README.md#start) has a second line for this case. It makes the agent stop if the folder is not a git repo or if `git status` shows work that is not committed, so `git diff` shows you what was added:
 
-Then paste the line from the [README](../README.md) as your first message in the project.
+```text
+This project already has files. If this folder is not a git repo, stop and ask me to run git init and commit my files first. Then run git status, and if it shows work that is not committed, stop and ask me to commit it. Then clone https://github.com/MyNameIsGlooboo/chief-prompt to a temporary folder outside this project, read its template/SETUP.md, and do the steps in it. Replace none of my own files. My language: simple English (A2).
+```
+
+Paste your line as your first message in the project.
 
 **The steps are in [`template/SETUP.md`](../template/SETUP.md):** setup files, language, memory folder, git, interview. The agent reads them from this repo, so you paste one line and not five steps. Read the file first if you want to know what the agent will do.
 
@@ -50,9 +54,17 @@ Start fresh each new day, each new big task, or when the chat gets long or the t
 
 ## Update a project to a newer version of the prompt
 
-Type `/chief-update` in the project. The skill gets the newest `template/` from this repo and replaces the three files the prompt owns: the rules file, the autopilot skill, and the update skill itself. A project with an older update skill gets the autopilot skill at the second `/chief-update`, in a new session. In your own files it adds only what is missing: new deny and ask rules in `.claude/settings.json`, new lines in `.gitignore`. If the reviewer file differs, it asks you which one to keep. Then it shows you `git diff` and waits for your yes before it commits. Open a new session after that.
+Commit your work, then paste the update line from the [README](../README.md#update) in the project. It is one line, like the install:
 
-**No `/chief-update` in your project yet?** Paste the line again once. It adds the skill.
+```text
+Clone https://github.com/MyNameIsGlooboo/chief-prompt to a temporary folder outside this project, read its template/.claude/skills/chief-update/SKILL.md, and do the steps in it.
+```
+
+The agent reads the newest update steps from this repo and replaces the three files the prompt owns: the rules file, the autopilot skill, and the update skill. In your own files it adds only what is missing: new deny and ask rules in `.claude/settings.json`, new lines in `.gitignore`. If the reviewer file differs, it asks you which one to keep. Then it shows you `git diff` and waits for your yes before it commits. Open a new session after that.
+
+**The line works in every project.** It needs no update skill in the project, and one run is enough, because the steps come from this repo and not from your older copy.
+
+**`/chief-update` is the second way.** It runs the copy of the steps in your project. If that copy is older, the agent tells you to type `/chief-update` once more in a new session.
 
 **Project set up with the first version of the prompt?** There the rules are still inside `CLAUDE.md`, and there is no `.claude/rules/` folder. Paste the line again. The agent adds the rules file, then shows you the old chief-of-staff parts in `CLAUDE.md` and asks before it removes them. Your Language line, your own rules and the two `@kb` lines stay. Do not skip this: if both copies stay, they will disagree after the next update.
 
