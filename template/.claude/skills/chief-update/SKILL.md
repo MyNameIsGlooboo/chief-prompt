@@ -1,19 +1,20 @@
 ---
 name: chief-update
-description: Update the chief-of-staff files of this project to the newest version from the chief-prompt repo. Replaces only the two files the prompt owns and adds missing lines to the others.
+description: Update the chief-of-staff files of this project to the newest version from the chief-prompt repo. Replaces only the three files the prompt owns and adds missing lines to the others.
 disable-model-invocation: true
 ---
 
 Update this project to the newest version of the chief prompt. The source is the `template/` folder of https://github.com/MyNameIsGlooboo/chief-prompt.
 
-Two files belong to the prompt, and you replace them. All other files belong to me: never replace or rewrite them, add only what is missing.
+Three files belong to the prompt, and you replace them. All other files belong to me: never replace or rewrite them, add only what is missing.
 
 ## Steps
 
 1. If this folder is not a git repo, stop and tell me to run `git init` and commit my work first. Run `git status --short`. If it shows anything, stop and ask me. Note the name of the current branch, then create a new branch and switch to it.
-2. Clone the repo to a temporary folder outside this project. If git is missing or the clone fails, stop and tell me. Check that the clone's `template/` folder has all six files: `CLAUDE.md`, `.gitignore`, `.claude/settings.json`, `.claude/agents/reviewer.md`, `.claude/rules/chief-of-staff.md` and `.claude/skills/chief-update/SKILL.md`. If one is missing, remove the clone, do step 12, and tell me. Change nothing in this project before this check has passed.
-3. Replace these two files with the copies from `template/`, exactly:
+2. Clone the repo to a temporary folder outside this project. If git is missing or the clone fails, stop and tell me. Check that the clone's `template/` folder has all seven files: `CLAUDE.md`, `.gitignore`, `.claude/settings.json`, `.claude/agents/reviewer.md`, `.claude/rules/chief-of-staff.md`, `.claude/skills/chief-update/SKILL.md` and `.claude/skills/chief-autopilot/SKILL.md`. If one is missing, remove the clone, do step 12, and tell me. Change nothing in this project before this check has passed.
+3. Replace these three files with the copies from `template/`, exactly. Copy one that is missing here:
    - `.claude/rules/chief-of-staff.md`
+   - `.claude/skills/chief-autopilot/SKILL.md`
    - `.claude/skills/chief-update/SKILL.md` (this file). Finish this run with the steps you have already read.
 4. `.claude/settings.json`: add each deny rule and ask rule that is in the template and not here. Keep every rule that is here, also one that is not in the template. If the file is missing, copy it.
 5. `.gitignore`: add the lines that are in the template and not here. If the file is missing, copy it.

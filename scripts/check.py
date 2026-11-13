@@ -16,6 +16,9 @@ CLAUDE_MD_MAX_LINES = 100
 RULES_MAX_LINES = 100
 RULES_FILE = ".claude/rules/chief-of-staff.md"
 UPDATE_SKILL = ".claude/skills/chief-update/SKILL.md"
+AUTOPILOT_SKILL = ".claude/skills/chief-autopilot/SKILL.md"
+# Autopilot runs with nobody there. Its skill must name each action it never does.
+AUTOPILOT_NEVER = ["git push", "git merge", "gh pr merge", "gh repo create", "deleting a file", "kb/approved/plan.md", "publishing", "deploying", "paying"]
 PROMPT_MAX_WORDS = 400
 README_MAX_LINES = 100
 README_DIAGRAMS = 3
@@ -42,9 +45,9 @@ REQUIRED_GITIGNORE = [".env", ".env.*", ".secrets/", ".obsidian/"]
 REQUIRED_IMPORTS = ["@kb/status.md", "@kb/todo.md"]
 REVIEWER_TOOLS = "tools: Read, Grep, Glob"
 # This repo uses its own prompt. These root files must be exact copies of the template.
-ROOT_COPIES = [RULES_FILE, UPDATE_SKILL, ".claude/settings.json", ".claude/agents/reviewer.md", ".gitignore"]
+ROOT_COPIES = [RULES_FILE, UPDATE_SKILL, AUTOPILOT_SKILL, ".claude/settings.json", ".claude/agents/reviewer.md", ".gitignore"]
 # Files the setup steps must name, so the agent copies all of them.
-PROMPT_MUST_NAME = [RULES_FILE, UPDATE_SKILL, "CLAUDE.md", ".gitignore", ".claude/settings.json", ".claude/agents/reviewer.md"]
+PROMPT_MUST_NAME = [RULES_FILE, UPDATE_SKILL, AUTOPILOT_SKILL, "CLAUDE.md", ".gitignore", ".claude/settings.json", ".claude/agents/reviewer.md"]
 # The setup steps must tell the agent to keep files that already exist.
 PROMPT_MUST_SAY = ["never replace", "Add only what is missing"]
 
@@ -125,12 +128,33 @@ def check_update_skill():
     check("disable-model-invocation: true" in lines, "only the user can start the update skill")
     body = text[match.end():]
     check("github.com/MyNameIsGlooboo/chief-prompt" in body, "the update skill names the source repo")
-    # The two files the prompt owns. The skill must replace both, or it never gets newer itself.
-    for name in [RULES_FILE, UPDATE_SKILL]:
+    # The three files the prompt owns. The skill must replace each one, or it never gets newer itself.
+    for name in [RULES_FILE, UPDATE_SKILL, AUTOPILOT_SKILL]:
         check(name in body, f"the update skill replaces {name}")
     # The files that belong to the project. The skill must name each one.
     for name in ["CLAUDE.md", ".gitignore", ".claude/settings.json", ".claude/agents/reviewer.md"]:
         check(name in body, f"the update skill handles {name}")
+
+
+def check_autopilot_skill():
+    text = read(TEMPLATE / AUTOPILOT_SKILL)
+    if text is None:
+        return
+    match = re.match(r"---\n(.*?)\n---\n", text, re.DOTALL)
+    check(match is not None, "the autopilot skill starts with frontmatter")
+    if match is None:
+        return
+    lines = match.group(1).splitlines()
+    check("name: chief-autopilot" in lines, "the autopilot skill is named chief-autopilot")
+    check(any(line.startswith("description: ") for line in lines), "the autopilot skill has a description")
+    # The mode is the user's choice. The agent must never turn it on by itself.
+    check("disable-model-invocation: true" in lines, "only the user can start the autopilot skill")
+    body = text[match.end():]
+    never = body.split("## Never in autopilot")[1].split("\n## ")[0] if "## Never in autopilot" in body else ""
+    check(bool(never), "the autopilot skill has the part 'Never in autopilot'")
+    for action in AUTOPILOT_NEVER:
+        check(action in never, f"the autopilot skill never does: {action}")
+    check("kb/research/autopilot-questions.md" in body, "the autopilot skill names the questions file")
 
 
 def check_claude_md():
@@ -243,6 +267,7 @@ check_root_copies()
 check_reviewer()
 check_rules()
 check_update_skill()
+check_autopilot_skill()
 check_claude_md()
 check_gitignore()
 check_prompt()
