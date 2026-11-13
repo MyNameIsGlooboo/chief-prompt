@@ -8,7 +8,7 @@ Talk to me in simple English (A2). Keep commands, error text, and technical term
 
 ## Rules for this repo only
 
-- The product is the one line in `README.md`, the steps in `template/SETUP.md`, and the seven files in `template/` that the agent copies. "The prompt" means the line and the steps together. A change to `template/` changes the rules of every project that uses the prompt, so treat it as code.
+- The product is the three lines to paste in `README.md` (install, install for a project that already has files, and update), the steps in `template/SETUP.md`, and the seven files in `template/` that the agent copies. "The prompt" means the lines and the steps together. A change to `template/` changes the rules of every project that uses the prompt, so treat it as code.
 - The proof for every task is `python scripts/check.py`. It must pass before you call a task done.
 - `.claude/rules/chief-of-staff.md`, `.claude/skills/chief-update/SKILL.md`, `.claude/skills/chief-autopilot/SKILL.md`, `.claude/settings.json`, `.claude/agents/reviewer.md` and `.gitignore` in the repo root are exact copies of the files in `template/`. Change the file in `template/` first, then copy it. The check script fails if they differ.
 - Keep the steps short. The check script fails when `template/SETUP.md` is over 400 words.
