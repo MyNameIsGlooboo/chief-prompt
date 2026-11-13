@@ -2,7 +2,7 @@ Status: research, not approved
 
 # One prompt for the ship step
 
-Draft from 2026-11-14. Nothing in `template/` is changed yet.
+Draft from 2026-11-14. The owner approved the rule on 2026-11-14, after the test below. See `kb/approved/decisions.md`. The wording in the rules file is longer than the one in this draft, because the reviewer found four problems.
 
 ## The problem
 
