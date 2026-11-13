@@ -4,6 +4,19 @@ Status: research, not approved
 
 The owner started the run with two new tasks. They are the last two lines of `kb/todo.md`.
 
+## Report
+
+- Tasks done (2): the "Autopilot" section in `README.md` with a diagram and five steps, and the one-line update. `python scripts/check.py` passes after each one.
+- Tasks blocked: none.
+- Tasks skipped (4): the four "try it in a real project" tasks. They need changes outside this folder.
+- Stashes: none.
+- Option branches: none.
+- Files to delete: none.
+- Open questions (2): the README limit (now 140 lines, 4 diagrams), and what the "one line" for the update is. See below.
+- Not done on purpose: no push, no merge, no reviewer yet. `scripts/check.py` and the update skill changed, so the reviewer must read the diff before the merge.
+- Not tested: the update line in a real project. The mermaid diagram was not rendered on GitHub.
+- Small point: root `CLAUDE.md` still says the product is "the one line". There are two lines now.
+
 ## Notes
 
 - Skipped: "Try the prompt in one project that already has a `CLAUDE.md`...". Reason: it needs changes in another project folder, and autopilot never changes anything outside this folder.
