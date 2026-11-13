@@ -12,7 +12,7 @@ Three files belong to the prompt, and you replace them. All other files belong t
 
 ## Steps
 
-1. If this folder is not a git repo, stop and tell me to run `git init` and commit my work first. Run `git status --short`. If it shows anything, stop and ask me. Note the name of the current branch, then create a new branch and switch to it.
+1. If this folder is not a git repo, stop and tell me to run `git init` and commit my work first. Run `git status --short`. If it shows anything, stop and ask me. For a stop in this step, change nothing in this project and do not do step 12. If you already made a clone, remove the clone first. Note the name of the current branch, then create a new branch and switch to it.
 2. If you read this file from a temporary clone that you made in this session, use that clone. If not, clone the repo to a temporary folder outside this project. If git is missing or the clone fails, stop and tell me. Check that the clone's `template/` folder has all seven files: `CLAUDE.md`, `.gitignore`, `.claude/settings.json`, `.claude/agents/reviewer.md`, `.claude/rules/chief-of-staff.md`, `.claude/skills/chief-update/SKILL.md` and `.claude/skills/chief-autopilot/SKILL.md`. If one is missing, remove the clone, do step 12, and tell me. Change nothing in this project before this check has passed.
 3. Replace these three files with the copies from `template/`, exactly. Copy one that is missing here:
    - `.claude/rules/chief-of-staff.md`
@@ -26,7 +26,7 @@ Three files belong to the prompt, and you replace them. All other files belong t
 9. Run `git status --short`. If it shows nothing, do step 12, say "Already up to date", and end.
 10. If it shows something, list each file and what you did to it. Show me `git diff` for the changed files. `git diff` does not show new files, so show each new file in full. If `.claude/settings.json` is new or changed, show me the whole file. Then ask me: commit, yes or no?
 11. If I say yes, commit on the new branch. Tell me to open a new session, because Claude Code loads rules, settings and skills when a session starts. If you read this file from the copy in this project and that copy changed in step 3, also tell me to type `/chief-update` once more in that new session, because the newer skill can have steps that this run did not do. If you read it from the clone, one run is enough. The new branch then follows the normal rule for a ready branch.
-12. Undo, for a no and for a stop: run `git restore .`, delete only the files that this run created, switch back to the branch from step 1, and delete the new branch. Then tell me that the project is as it was before.
+12. Undo, for a no and for a stop after step 1: remove the clone if it still exists, run `git restore .`, delete only the files that this run created, switch back to the branch from step 1, and delete the new branch. Then tell me that the project is as it was before.
 
 ## Limits
 
