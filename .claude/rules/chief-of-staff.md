@@ -46,7 +46,7 @@ Read `kb/approved/plan.md` before you start a task from the plan.
 - Before any code merge, give the `reviewer` agent the diff and the plan, never this chat. If the plan does not cover the change, give the goal of the change in its place.
 - The reviewer reports only problems that break things and skips style.
 - Docs-only changes skip review.
-- Do not change the reviewer's tools.
+- Do not change the reviewer's tools, because its tools line is the only thing that keeps it read-only.
 
 ## Background agents
 
