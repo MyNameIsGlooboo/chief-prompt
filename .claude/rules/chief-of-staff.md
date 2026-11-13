@@ -11,11 +11,11 @@ Ask decisions as short cards: one question, two or three options with an example
 ## Approval
 
 - `.claude/settings.json` blocks reads of `.env`, `.env.*` and `.secrets/`. It asks me before `git push`, `git merge`, `gh pr merge`, `gh repo create`, deleting files, and any edit of `kb/approved/plan.md`. It lets you use the browser tools, `WebFetch` and `WebSearch` without a question.
-- Settings cannot catch these: sending email, messages, files or data to other people or outside services, publishing, deploying, and paying. Ask me first for those too, also in a browser, because they cannot be undone.
+- Settings cannot catch these: sending email, messages, files or data to other people or outside services, publishing, deploying, and paying. Ask me first for those too, also in a browser, because they cannot be undone. A search, and opening or reading a page, is not sending.
 - Always work on branches. The first commit of a new repo is the only commit made directly on main.
 - You may delete files you created on your own branch. Ask before deleting anything else.
 - When a branch is ready (the proof passed and, for code, the reviewer found no blocking problem), ask me once for the whole step: push and PR if we use GitHub, merge, and delete of the merged branch. Name each part in the question. After my yes, do all of it, and stop only if something fails.
-- Run that step as one shell command, joined with `&&`, so that Claude Code asks me once and not for each part. Never join the parts with `;`. If the shell does not know `&&` (Windows PowerShell 5.1), use Bash. With GitHub: push, create the PR, wait for its checks if the repo has any, then `gh pr merge --delete-branch`, which also deletes the branch and updates local main. If the wait finds no checks yet, run the rest again with the wait, and do not merge without it. Local only: switch to main, merge, delete the branch. If a part fails, tell me which parts are done.
+- Run that step as one shell command, joined with `&&`, so that Claude Code asks me once and not for each part. Never join the parts with `;`, because then a later part still runs after an earlier part failed. If the shell does not know `&&` (Windows PowerShell 5.1), use Bash. With GitHub: push, create the PR, wait for its checks if the repo has any, then `gh pr merge --delete-branch`, which also deletes the branch and updates local main. If the wait finds no checks yet, run the rest again with the wait, and do not merge without it. Local only: switch to main, merge, delete the branch. If a part fails, tell me which parts are done.
 - Branches from parallel writers are not part of that one step. I read and merge those myself.
 - Change `kb/approved/plan.md` only with the Edit or Write tool, never with a shell command.
 - Reading, searching, editing, tests, and branch commits need no approval.
@@ -43,7 +43,7 @@ Read `kb/approved/plan.md` before you start a task from the plan.
 ## Check, then review
 
 - Run the proof from the plan before you call a task done. If there is none yet, ask me for one at the first coding task.
-- Before any code merge, give the `reviewer` agent the diff and the plan, never this chat.
+- Before any code merge, give the `reviewer` agent the diff and the plan, never this chat. If the plan does not cover the change, give the goal of the change in its place.
 - The reviewer reports only problems that break things and skips style.
 - Docs-only changes skip review.
 - Do not change the reviewer's tools.
@@ -52,7 +52,7 @@ Read `kb/approved/plan.md` before you start a task from the plan.
 
 - Use them only for long, parallel, or clean-context work, because each costs my usage.
 - Each gets a full brief (goal, files, done when), because it cannot see the chat.
-- Say in one line what each is doing. Tell me the result in 3 lines when it finishes.
+- Say in one line what each is doing. When it finishes, tell me the result in a few lines: what it found or changed, and what it could not check.
 - Parallel writers each get their own worktree and branch, plus a PR if we use GitHub. Three at most.
 - Two agents never write the same files.
 

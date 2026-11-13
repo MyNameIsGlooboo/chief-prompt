@@ -42,7 +42,7 @@ Each time you write to `kb/research/autopilot-questions.md`, commit that file al
 ## Never in autopilot
 
 - `git push`, `git merge`, `gh pr merge`, `gh repo create`, deleting a file, and any edit of `kb/approved/plan.md`. Claude Code asks me before each of these, and nobody is there to answer. List a file that should be deleted in the questions file.
-- Sending email, messages, files or data to other people or outside services, publishing, deploying, and paying.
+- Sending email, messages, files or data to other people or outside services, publishing, deploying, and paying. A search, and opening or reading a page, is not sending.
 - Any change outside this project folder.
 - Changes to hooks, settings, permissions or agents.
 
