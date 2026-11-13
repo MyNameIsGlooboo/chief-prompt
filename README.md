@@ -22,7 +22,7 @@ Change the last sentence to your own language (for example "My language: simple 
 
 ```mermaid
 flowchart LR
-    A["You paste<br/>one line"] --> B["Agent copies<br/>six files"]
+    A["You paste<br/>one line"] --> B["Agent copies<br/>seven files"]
     B --> C["You approve<br/>the settings"]
     C --> D["Git: local<br/>or GitHub"]
     D --> E["Interview,<br/>card by card"]
@@ -72,6 +72,7 @@ flowchart LR
 - **Start:** type `/clear` or open a new session, and say "hello". The state is in `CLAUDE.md`, `kb/status.md` and `kb/todo.md`, so the agent continues from "Next step".
 - **Not sure?** Ask "Is everything saved?"
 - **Newer version of the prompt:** type `/chief-update` in the project.
+- **Away for some hours?** Type `/chief-autopilot`. The agent works through `kb/todo.md` alone on a local `autopilot` branch. It does not push, merge, or delete, and it saves its questions for you. Read [the guide](docs/guide.md#autopilot) first.
 
 ## Five limits to know
 

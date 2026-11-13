@@ -5,8 +5,9 @@
 - [x] Add a changelog and a "Last updated" line. Done when: `CHANGELOG.md` exists, the line is at the top of `README.md`, and `python scripts/check.py` passes.
 - [x] One-line install. Done when: the five steps are in a file in `template/`, `README.md` shows one line to paste, and `python scripts/check.py` passes.
 - [x] Draft the autopilot mode. Done when: `kb/research/autopilot.md` exists and the owner has said yes or no to each open point.
-- [ ] Build the autopilot skill. Done when: the permission mode for a run with no questions is checked in the Claude Code docs, `template/.claude/skills/chief-autopilot/SKILL.md` exists, `README.md` describes the mode and its limits, and `python scripts/check.py` passes.
+- [x] Build the autopilot skill. Done when: the permission mode for a run with no questions is checked in the Claude Code docs, `template/.claude/skills/chief-autopilot/SKILL.md` exists, `README.md` describes the mode and its limits, and `python scripts/check.py` passes.
 - [x] Make `README.md` easier to read: pictures, the main ideas at the top, the long parts at the bottom. Done when: the owner has picked the pictures and the layout, the new `README.md` is written, and `python scripts/check.py` passes.
 - [ ] Try the prompt in one project that already has a `CLAUDE.md`, a `.gitignore` and settings. Done when: `git diff` there shows only added lines, and what went wrong is in kb/chief-prompt-lessons.md.
 - [ ] Try `/chief-update` in one project after the next template change. Done when: `git diff` there shows the new rules file and only added lines in the other files, and what went wrong is in kb/chief-prompt-lessons.md.
 - [ ] Use the prompt in one real project. Done when: the files in "What you should see" in docs/guide.md exist there, and the lines of its kb/chief-prompt-lessons.md are added to kb/chief-prompt-lessons.md in this repo.
+- [ ] Try `/chief-autopilot` in one real project with three small tasks. Done when: the `autopilot` branch has one commit per task, nothing was pushed or deleted, and what went wrong is in kb/chief-prompt-lessons.md.

@@ -13,7 +13,7 @@ In this prompt, an *agent* means a Claude Code agent (subagent): a separate work
 1. In your current session, ask: *"Save everything important from this session to files."* (The old session does not have this prompt yet, so ask in plain words.)
 2. Type `/clear`.
 
-**Project that already has files?** The prompt replaces none of your files. It adds two files of its own, `.claude/rules/chief-of-staff.md` and `.claude/skills/chief-update/SKILL.md`, and adds only the missing lines to your `CLAUDE.md`, `.gitignore` and `.claude/settings.json`. Commit your work first, so `git diff` shows you what was added.
+**Project that already has files?** The prompt replaces none of your files. It adds three files of its own, `.claude/rules/chief-of-staff.md`, `.claude/skills/chief-update/SKILL.md` and `.claude/skills/chief-autopilot/SKILL.md`, and adds only the missing lines to your `CLAUDE.md`, `.gitignore` and `.claude/settings.json`. Commit your work first, so `git diff` shows you what was added.
 
 Then paste the line from the [README](../README.md) as your first message in the project.
 
@@ -21,12 +21,13 @@ Then paste the line from the [README](../README.md) as your first message in the
 
 ## What the agent copies
 
-Six files from the [`template/`](../template) folder of this repo. The agent does not write them itself, so every project gets the same rules. The seventh file in that folder, `SETUP.md`, holds the steps. The agent does not copy it.
+Seven files from the [`template/`](../template) folder of this repo. The agent does not write them itself, so every project gets the same rules. The eighth file in that folder, `SETUP.md`, holds the steps. The agent does not copy it.
 
-Two files belong to the prompt. The agent copies them exactly, and an update replaces them:
+Three files belong to the prompt. The agent copies them exactly, and an update replaces them:
 
 - [`.claude/rules/chief-of-staff.md`](../template/.claude/rules/chief-of-staff.md): the standing rules. Claude Code loads every file in `.claude/rules/` in every session.
 - [`.claude/skills/chief-update/SKILL.md`](../template/.claude/skills/chief-update/SKILL.md): the update skill. It runs only when you type `/chief-update`.
+- [`.claude/skills/chief-autopilot/SKILL.md`](../template/.claude/skills/chief-autopilot/SKILL.md): the autopilot skill. It runs only when you type `/chief-autopilot`.
 
 Four files belong to you. The agent copies one only if you do not have it. If you have it, the agent adds the missing lines and changes nothing else:
 
@@ -35,11 +36,11 @@ Four files belong to you. The agent copies one only if you do not have it. If yo
 - [`.claude/agents/reviewer.md`](../template/.claude/agents/reviewer.md): the read-only reviewer.
 - [`.gitignore`](../template/.gitignore)
 
-You can also copy the six files into an empty project by hand before you paste the line. Then the agent finds nothing to add.
+You can also copy the seven files into an empty project by hand before you paste the line. Then the agent finds nothing to add.
 
 ## What you should see
 
-The agent copies or completes the six files, tells you what it added, shows you `.claude/settings.json` for approval, asks about git, then interviews you card by card. When the plan is approved, these files exist: `CLAUDE.md`, `.gitignore`, `.claude/rules/chief-of-staff.md`, `.claude/skills/chief-update/SKILL.md`, `.claude/settings.json`, `.claude/agents/reviewer.md`, `kb/status.md`, `kb/todo.md`, `kb/approved/decisions.md`, `kb/approved/plan.md`. Then open a new session, so Claude Code loads the new settings and the reviewer.
+The agent copies or completes the seven files, tells you what it added, shows you `.claude/settings.json` for approval, asks about git, then interviews you card by card. When the plan is approved, these files exist: `CLAUDE.md`, `.gitignore`, `.claude/rules/chief-of-staff.md`, `.claude/skills/chief-update/SKILL.md`, `.claude/skills/chief-autopilot/SKILL.md`, `.claude/settings.json`, `.claude/agents/reviewer.md`, `kb/status.md`, `kb/todo.md`, `kb/approved/decisions.md`, `kb/approved/plan.md`. Then open a new session, so Claude Code loads the new settings and the reviewer.
 
 **Optional:** open the project folder in [Obsidian](https://obsidian.md) to read `CLAUDE.md` and the files in `kb/` as notes.
 
@@ -49,7 +50,7 @@ Start fresh each new day, each new big task, or when the chat gets long or the t
 
 ## Update a project to a newer version of the prompt
 
-Type `/chief-update` in the project. The skill gets the newest `template/` from this repo and replaces the two files the prompt owns: the rules file and the skill itself. In your own files it adds only what is missing: new deny and ask rules in `.claude/settings.json`, new lines in `.gitignore`. If the reviewer file differs, it asks you which one to keep. Then it shows you `git diff` and waits for your yes before it commits. Open a new session after that.
+Type `/chief-update` in the project. The skill gets the newest `template/` from this repo and replaces the three files the prompt owns: the rules file, the autopilot skill, and the update skill itself. A project with an older update skill gets the autopilot skill at the second `/chief-update`, in a new session. In your own files it adds only what is missing: new deny and ask rules in `.claude/settings.json`, new lines in `.gitignore`. If the reviewer file differs, it asks you which one to keep. Then it shows you `git diff` and waits for your yes before it commits. Open a new session after that.
 
 **No `/chief-update` in your project yet?** Paste the line again once. It adds the skill.
 
@@ -60,3 +61,15 @@ Type `/chief-update` in the project. The skill gets the newest `template/` from 
 - **Nothing special to do.** The prompt saves as you go: decisions go to `kb/approved/decisions.md` when you make them, and `kb/status.md` and `kb/todo.md` are updated after every finished task. If a window closes or a session crashes, the files are current as of the last finished task, as long as the agent followed the "Save as you go" rules.
 - **Want to be sure?** Ask "Is everything saved?" The agent checks `kb/status.md` and `kb/todo.md` and fixes them if needed.
 - **Next session:** type `/clear` (or open a new session) and say "hello". `CLAUDE.md` loads `kb/status.md` and `kb/todo.md` by itself, and the agent continues from "Next step".
+
+## Autopilot
+
+Autopilot is a mode that you turn on. It is never on by itself. Type `/chief-autopilot` when `kb/todo.md` has open tasks and you want the agent to work while you are away.
+
+- The agent creates a local branch named `autopilot` and works through the open tasks in order, one commit per task.
+- It does not push, merge, delete files, or change the approved plan. It does not send, publish, deploy, or pay. A task that needs one of these is skipped and listed.
+- At an open question it takes its own pick and writes the question to `kb/research/autopilot-questions.md`. It builds another option only when that is small, on its own branch.
+- If the check for a task fails twice, the agent puts that work into a named `git stash` and goes to the next task. Failed work gets no commit.
+- When you are back, the agent shows you the report and asks one card per question. Then the `autopilot` branch goes through the normal step: check, reviewer, your one yes.
+
+**Before you start it:** a permission question from Claude Code stops the run until you answer. Auto mode asks the fewest questions ([permission modes](https://code.claude.com/docs/en/permission-modes), checked 13 Nov 2026). The ask rules in `.claude/settings.json` ask in every mode, which is why autopilot never pushes, merges, or deletes. Read the limits in [limits.md](limits.md) too.
