@@ -66,10 +66,10 @@ Type `/chief-update` in the project. The skill gets the newest `template/` from 
 
 Autopilot is a mode that you turn on. It is never on by itself. Type `/chief-autopilot` when `kb/todo.md` has open tasks and you want the agent to work while you are away.
 
-- The agent creates a local branch named `autopilot` and works through the open tasks in order, one commit per task.
+- The agent creates a local branch named `autopilot` and works through the open tasks in order, one commit per task, plus small commits for its notes.
 - It does not push, merge, delete files, or change the approved plan. It does not send, publish, deploy, or pay. A task that needs one of these is skipped and listed.
-- At an open question it takes its own pick and writes the question to `kb/research/autopilot-questions.md`. It builds another option only when that is small, on its own branch.
+- At an open question it takes its own pick and writes the question to `kb/research/autopilot-questions.md`. It builds another option only when that is small, on its own branch, for example `autopilot-q1-b`.
 - If the check for a task fails twice, the agent puts that work into a named `git stash` and goes to the next task. Failed work gets no commit.
-- When you are back, the agent shows you the report and asks one card per question. Then the `autopilot` branch goes through the normal step: check, reviewer, your one yes.
+- When you are back, say "hello", also in a new session. `kb/status.md` points the agent to the questions file. The agent shows you the report and asks one card per question. Then the `autopilot` branch goes through the normal step: check, reviewer, your one yes.
 
 **Before you start it:** a permission question from Claude Code stops the run until you answer. Auto mode asks the fewest questions ([permission modes](https://code.claude.com/docs/en/permission-modes), checked 13 Nov 2026). The ask rules in `.claude/settings.json` ask in every mode, which is why autopilot never pushes, merges, or deletes. Read the limits in [limits.md](limits.md) too.
