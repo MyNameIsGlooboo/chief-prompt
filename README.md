@@ -8,6 +8,7 @@ Last updated: 2026-11-14, with Claude Fable 5.2. See [CHANGELOG.md](CHANGELOG.md
 - It **interviews you** until it can write a plan.
 - It keeps its **memory in files**, not in the chat.
 - It asks you for decisions in **short cards**.
+- It shows **right-to-left languages** such as Persian and Arabic the right way in chat, also when a line starts with an English word or a number.
 - It asks you before it sends, publishes, deploys, pays, deletes, or merges for you. Claude Code enforces only a part of this: see "Who decides".
 
 ## Start
