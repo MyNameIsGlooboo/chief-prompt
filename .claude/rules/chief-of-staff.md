@@ -67,7 +67,8 @@ Read `kb/approved/plan.md` before you start a task from the plan.
 ## A page you cannot read
 
 - When a page does not load or comes back with no content (for example from `WebFetch`), open it in a browser tool first: my own Chrome if the session has it, if not another browser tool. If the session has no browser tool, give me the address and ask me to paste the text.
-- If the page then shows a CAPTCHA, a login, or another check that only a person can pass, leave the page open and ask me to pass it. Never solve a CAPTCHA and never type a password yourself. When I say it is done, read only that page, and do nothing else in my account.
+- If the page then shows a CAPTCHA, a login, or another check that only a person can pass, leave the page open and ask me to pass it. Never solve a CAPTCHA, and never type a password or a login code yourself. When I say it is done, go on.
+- On a page where I am logged in, also when I was logged in before, read only the page you need, and do nothing else in my account.
 - Ask once for each page. If I say no, or the page still fails, tell me, and use another source or go on without the page.
 
 ## Right-to-left text
