@@ -16,3 +16,4 @@
 - [x] One-line install for a project that already has files. Done when: `README.md` shows the line, and `python scripts/check.py` passes.
 - [x] Decide on the three proposals in `kb/research/sources-2026-11-13-2.md` (done: three times yes), and run `/doctor prompt-audit template`. Done when: each proposal has a yes or no in `kb/approved/decisions.md`, and the audit findings are in the research file.
 - [x] Decide on the draft `kb/research/one-prompt-ship.md`: one joined command for the ship step. Done when: the owner has said yes or no, and the answer is in `kb/approved/decisions.md`.
+- [ ] Build parallel writers into the template. Done when: the owner has answered the five open points in `kb/research/parallel-writers.md`, the rule is in `template/.claude/rules/chief-of-staff.md` and the autopilot skill, `docs/limits.md` names the limits, and `python scripts/check.py` passes.

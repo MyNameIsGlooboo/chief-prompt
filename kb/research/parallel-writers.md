@@ -79,10 +79,35 @@ In "Approval", the line about parallel writers becomes:
 2. The model of the writer. Options: `sonnet` (cheaper), or the same model as the chief. My pick: `sonnet`.
 3. `memory: project` for the writer, so it keeps notes about the project. My pick: no at first, because it adds a folder that the prompt must explain.
 4. Who removes the worktrees and the branches of the writers after the ship step. My pick: the chief, in the same joined ship command, because they are its own.
+5. The line `.claude/worktrees/` in the template `.gitignore` (found in the test). My pick: yes. Without it, the autopilot skill and the update skill stop while a worktree exists.
 
 ## Test
 
-Not done yet.
+Done on 2026-11-14 in this repo, in the Claude desktop app, with two writers at the same time (`general-purpose` agents, model `sonnet`, `isolation: worktree`). Each writer added one small file and made one commit.
+
+What worked:
+
+- Both writers ran in the background, and the chief could go on. They took 9 and 11 seconds.
+- Each got its own worktree in `.claude/worktrees/agent-<id>` and its own branch `worktree-agent-<id>`.
+- Both worktrees started from main (`246941a`), not from the chief's branch (`parallel-writers-draft`). So a writer does not see work that is not on main.
+- `python scripts/check.py` passed in each worktree.
+- The chief picked both commits onto a test branch with `git cherry-pick`, and the check passed after each pick.
+- Claude Code asked no permission question: not for the writers' commands, not for `git cherry-pick`, not for `git worktree remove`, not for `git branch -D`.
+
+What the test found:
+
+1. **A writer is not cheap.** Each writer used about 82,000 tokens for a task of two lines and four tool calls. Most of it is the start of the agent, not the work. So "do a task yourself when it takes only a few minutes" matters for usage, and a small task must stay with the chief.
+2. **`.claude/worktrees/` shows up in `git status`.** While a writer's worktree exists, `git status --short` prints `?? .claude/worktrees/`. The autopilot skill and the update skill stop when `git status --short` shows anything. So the template `.gitignore` needs the line `.claude/worktrees/`.
+3. **A writer adds the Co-Authored-By line to its commit by itself.** One of the two reported it. This is fine, but the picked commit keeps it.
+4. **Clean-up is three commands for each writer**: `git worktree remove`, `git branch -D` for its branch (`-d` refuses, because the branch is not merged, only picked). The empty folder `.claude/worktrees/` stays.
+
+What the test did not cover:
+
+- A pick with a conflict, and a proof that fails after a pick.
+- A real task with real code, and the quality of a writer's work on the cheaper model.
+- Three writers, and writers that run for many minutes.
+- Autopilot with writers.
+- A session in a terminal, and a permission mode other than the one of this session.
 
 ## Limits to write into docs/limits.md
 
