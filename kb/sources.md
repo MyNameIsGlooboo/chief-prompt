@@ -13,7 +13,7 @@ Last read: 2026-11-13 (see `kb/research/sources-2026-11-13-2.md` for which pages
 - [Memory](https://code.claude.com/docs/en/memory): `CLAUDE.md` and imports.
 - [Settings](https://code.claude.com/docs/en/settings)
 - [Permissions](https://code.claude.com/docs/en/permissions): the rule formats in `template/.claude/settings.json`.
-- [Subagents](https://code.claude.com/docs/en/sub-agents): the format of `template/.claude/agents/reviewer.md`.
+- [Subagents](https://code.claude.com/docs/en/sub-agents): the format of `template/.claude/agents/reviewer.md` and `template/.claude/agents/writer.md`.
 - [Skills](https://code.claude.com/docs/en/skills)
 - [Hooks](https://code.claude.com/docs/en/hooks)
 

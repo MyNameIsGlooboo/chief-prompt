@@ -2,3 +2,4 @@
 .env.*
 .secrets/
 .obsidian/
+.claude/worktrees/

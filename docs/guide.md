@@ -25,7 +25,7 @@ Paste your line as your first message in the project.
 
 ## What the agent copies
 
-Seven files from the [`template/`](../template) folder of this repo. The agent does not write them itself, so every project gets the same rules. The eighth file in that folder, `SETUP.md`, holds the steps. The agent does not copy it.
+Eight files from the [`template/`](../template) folder of this repo. The agent does not write them itself, so every project gets the same rules. The ninth file in that folder, `SETUP.md`, holds the steps. The agent does not copy it.
 
 Three files belong to the prompt. The agent copies them exactly, and an update replaces them:
 
@@ -33,18 +33,19 @@ Three files belong to the prompt. The agent copies them exactly, and an update r
 - [`.claude/skills/chief-update/SKILL.md`](../template/.claude/skills/chief-update/SKILL.md): the update skill. It runs only when you type `/chief-update`.
 - [`.claude/skills/chief-autopilot/SKILL.md`](../template/.claude/skills/chief-autopilot/SKILL.md): the autopilot skill. It runs only when you type `/chief-autopilot`.
 
-Four files belong to you. The agent copies one only if you do not have it. If you have it, the agent adds the missing lines and changes nothing else:
+Five files belong to you. The agent copies one only if you do not have it. If you have it, the agent adds the missing lines and changes nothing else:
 
 - [`CLAUDE.md`](../template/CLAUDE.md): the rules of your project. The prompt needs only the Language part and two import lines in it.
 - [`.claude/settings.json`](../template/.claude/settings.json): the rules that Claude Code itself enforces.
 - [`.claude/agents/reviewer.md`](../template/.claude/agents/reviewer.md): the read-only reviewer.
+- [`.claude/agents/writer.md`](../template/.claude/agents/writer.md): the background writer. It does one task in its own worktree and makes one commit. Its `model` line names a cheaper model: change it if the work is too weak.
 - [`.gitignore`](../template/.gitignore)
 
-You can also copy the seven files into an empty project by hand before you paste the line. Then the agent finds nothing to add.
+You can also copy the eight files into an empty project by hand before you paste the line. Then the agent finds nothing to add.
 
 ## What you should see
 
-The agent copies or completes the seven files, tells you what it added, shows you `.claude/settings.json` for approval, asks about git, then interviews you card by card. When the plan is approved, these files exist: `CLAUDE.md`, `.gitignore`, `.claude/rules/chief-of-staff.md`, `.claude/skills/chief-update/SKILL.md`, `.claude/skills/chief-autopilot/SKILL.md`, `.claude/settings.json`, `.claude/agents/reviewer.md`, `kb/status.md`, `kb/todo.md`, `kb/approved/decisions.md`, `kb/approved/plan.md`. Then open a new session, so Claude Code loads the new settings and the reviewer.
+The agent copies or completes the eight files, tells you what it added, shows you `.claude/settings.json` for approval, asks about git, then interviews you card by card. When the plan is approved, these files exist: `CLAUDE.md`, `.gitignore`, `.claude/rules/chief-of-staff.md`, `.claude/skills/chief-update/SKILL.md`, `.claude/skills/chief-autopilot/SKILL.md`, `.claude/settings.json`, `.claude/agents/reviewer.md`, `.claude/agents/writer.md`, `kb/status.md`, `kb/todo.md`, `kb/approved/decisions.md`, `kb/approved/plan.md`. Then open a new session, so Claude Code loads the new settings, the reviewer and the writer.
 
 **Optional:** open the project folder in [Obsidian](https://obsidian.md) to read `CLAUDE.md` and the files in `kb/` as notes.
 
@@ -60,13 +61,24 @@ Commit your work, then paste the update line from the [README](../README.md#upda
 Clone https://github.com/MyNameIsGlooboo/chief-prompt to a temporary folder outside this project, read its template/.claude/skills/chief-update/SKILL.md, and do the steps in it.
 ```
 
-The agent reads the newest update steps from this repo and replaces the three files the prompt owns: the rules file, the autopilot skill, and the update skill. In your own files it adds only what is missing: new allow, deny and ask rules in `.claude/settings.json`, new lines in `.gitignore`. If the reviewer file differs, it asks you which one to keep. Then it shows you `git diff` and waits for your yes before it commits. Open a new session after that.
+The agent reads the newest update steps from this repo and replaces the three files the prompt owns: the rules file, the autopilot skill, and the update skill. In your own files it adds only what is missing: new allow, deny and ask rules in `.claude/settings.json`, new lines in `.gitignore`. If the reviewer file or the writer file differs, it asks you which one to keep. Then it shows you `git diff` and waits for your yes before it commits. Open a new session after that.
 
 **The line works in every project.** It needs no update skill in the project, and one run is enough, because the steps come from this repo and not from your older copy.
 
 **`/chief-update` is the second way.** It runs the copy of the steps in your project. If that copy is older, the agent tells you to type `/chief-update` once more in a new session.
 
 **Project set up with the first version of the prompt?** There the rules are still inside `CLAUDE.md`, and there is no `.claude/rules/` folder. Paste the line again. The agent adds the rules file, then shows you the old chief-of-staff parts in `CLAUDE.md` and asks before it removes them. Your Language line, your own rules and the two `@kb` lines stay. Do not skip this: if both copies stay, they will disagree after the next update.
+
+## Parallel writers
+
+The chief gives a task to a background writer when the task has a clear "done when" and shares no files with a task that is running. Three writers at most run at one time. The chief does a task itself when it is small, when it needs your answers on the way, or when it builds on work that is not on main yet.
+
+- Each writer works in its own git worktree, in `.claude/worktrees/`, on its own branch, and makes one commit. It starts from main.
+- The chief picks each commit onto its work branch with `git cherry-pick` and runs the check after each pick. It does not ask you for this.
+- When the work branch is ready, you get the normal question once: push, PR, merge, delete. The same step removes the worktrees and the branches of the writers.
+- The writer is the agent file `.claude/agents/writer.md`. It has no browser tools and cannot start agents. It does not load your `CLAUDE.md`, so the chief puts the project rules that matter into the brief.
+
+**Is the chief still busy?** Type a message and press Enter: Claude Code keeps it and gives it to the agent after the running tool calls. For a short question, open a side chat (Ctrl+; on Windows, Cmd+; on macOS in the desktop app, or `/btw`): it sees the session and adds nothing to it ([interactive mode](https://code.claude.com/docs/en/interactive-mode), [desktop](https://code.claude.com/docs/en/desktop), checked 14 Nov 2026).
 
 ## If a session ends
 
@@ -78,7 +90,7 @@ The agent reads the newest update steps from this repo and replaces the three fi
 
 Autopilot is a mode that you turn on. It is never on by itself. Type `/chief-autopilot` when `kb/todo.md` has open tasks and you want the agent to work while you are away.
 
-- The agent creates a local branch named `autopilot` and works through the open tasks in order, one commit per task, plus small commits for its notes.
+- The agent creates a local branch named `autopilot` and works through the open tasks in order, one commit per task, plus small commits for its notes. It gives tasks that share no files to up to three background writers and picks their commits onto `autopilot`. The worktrees and branches of the writers stay until you are back.
 - It does not push, merge, delete files, or change the approved plan. It does not send, publish, deploy, or pay. A task that needs one of these is skipped and listed.
 - At an open question it takes its own pick and writes the question to `kb/research/autopilot-questions.md`. It builds another option only when that is small, on its own branch, for example `autopilot-q1-b`.
 - If the check for a task fails twice, the agent puts that work into a named `git stash` and goes to the next task. Failed work gets no commit.
