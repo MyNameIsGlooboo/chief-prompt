@@ -143,6 +143,8 @@ def check_rules():
     check(CHIEF_LINE in text, "the rules file has the chief-of-staff line")
     # The chief brings the work of its writers together with cherry-pick, because git merge has an ask rule.
     check("git cherry-pick" in text, "the rules file names git cherry-pick for the work of writers")
+    # A writer works where the ask rule for the plan may not reach. The chief must look at the files of a commit before the pick.
+    check("git show --stat" in text, "the rules file checks the files of a commit before a pick")
     # An import in this file would resolve from .claude/rules/, not from the project root.
     imports = [line for line in lines if re.search(r"(^|\s)@[\w./~-]+", line)]
     check(not imports, "the rules file has no import")
@@ -193,6 +195,7 @@ def check_autopilot_skill():
     for action in AUTOPILOT_NEVER:
         check(action in never, f"the autopilot skill never does: {action}")
     check("kb/research/autopilot-questions.md" in body, "the autopilot skill names the questions file")
+    check("git show --stat" in body, "the autopilot skill checks the files of a commit before a pick")
 
 
 def check_claude_md():

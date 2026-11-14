@@ -33,7 +33,7 @@ Each time you write to `kb/research/autopilot-questions.md`, commit that file al
 To be faster, give tasks to background writers as your rules say in "Background agents": three at most at one time, only tasks that share no files and do not build on each other. Do all other tasks yourself, with the steps above.
 
 1. A writer starts from main, not from `autopilot`. So give it only a task that needs nothing from this run.
-2. When a writer reports a commit, pick it onto `autopilot` with `git cherry-pick` and run the proof. If it passes, tick `kb/todo.md` and add the task to Done in `kb/status.md` in a second commit, `autopilot: tick <task>`.
+2. When a writer reports a commit, pick it onto `autopilot` as your rules say in "Approval": first commit your own task or finish it, so that `git status --short` shows nothing, then check the commit with `git show --stat`, then `git cherry-pick`, then the proof. A commit that touches `kb/`, `.claude/`, or a file outside its brief is not picked: write it to the questions file as blocked. If the proof passes, tick `kb/todo.md` and add the task to Done in `kb/status.md` in a second commit, `autopilot: tick <task>`.
 3. If a writer reports no commit, or the pick has a conflict (`git cherry-pick --abort`), or the proof fails after the pick (`git revert`), write the task, the error and the writer's branch to the questions file as blocked. Its work stays on its branch.
 4. A permission question from a writer stops the run too. So a writer gets no task that needs something from "Never in autopilot".
 
@@ -65,7 +65,7 @@ Write a short report at the top of the questions file: tasks done, tasks blocked
 
 1. Read the questions file and show me the report.
 2. Ask one card per question: your pick, the other options, and their branches. Log my answers in `kb/approved/decisions.md`.
-3. Delete the option branches and drop the stashes that I name. Remove the worktrees and the branches of the writers as your rules say for the ship step. For a blocked writer, ask me first, because its work is only on its branch. Ask before any other delete.
+3. Delete the option branches and drop the stashes that I name. Leave the worktrees and the branches of the writers for the ship step in step 5. For a blocked writer, ask me now: give the task back to it, or remove its worktree and branch. Its work is only on its branch. Ask before any other delete.
 4. Move the questions file to `kb/research/autopilot-questions-YYYY-MM-DD.md` with `git mv`, set Next step in `kb/status.md` to the real next step, and commit. The run is now closed.
 5. The `autopilot` branch now follows the normal rule for a ready branch: proof, reviewer, one approval. After the merge and the delete of the branch, a new run can start.
 
