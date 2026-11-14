@@ -174,6 +174,9 @@ def check_update_skill():
         check(name in body, f"the update skill handles {name}")
     # The update line makes the agent read this file from a clone. The skill must not clone a second time.
     check("use that clone" in body, "the update skill uses the clone it was read from")
+    # Started with /chief-update, the run begins with the copy in the project, which can be older.
+    # The skill must move the agent to the steps in the clone, or a new template file needs two runs.
+    check("go on with its step 2" in body, "the update skill moves to the newest steps in the clone")
 
 
 def check_autopilot_skill():

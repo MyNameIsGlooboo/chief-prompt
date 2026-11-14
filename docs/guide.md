@@ -65,7 +65,7 @@ The agent reads the newest update steps from this repo and replaces the three fi
 
 **The line works in every project.** It needs no update skill in the project, and one run is enough, because the steps come from this repo and not from your older copy.
 
-**`/chief-update` is the second way.** It runs the copy of the steps in your project. If that copy is older, the agent tells you to type `/chief-update` once more in a new session.
+**`/chief-update` is the second way.** It starts with the copy of the steps in your project. After the clone, the agent reads the newest steps there and goes on with those, so one run is enough. A copy from before 14 Nov 2026 does not do this yet: there the agent tells you to type `/chief-update` once more in a new session, or you paste the line.
 
 **Project set up with the first version of the prompt?** There the rules are still inside `CLAUDE.md`, and there is no `.claude/rules/` folder. Paste the line again. The agent adds the rules file, then shows you the old chief-of-staff parts in `CLAUDE.md` and asks before it removes them. Your Language line, your own rules and the two `@kb` lines stay. Do not skip this: if both copies stay, they will disagree after the next update.
 
