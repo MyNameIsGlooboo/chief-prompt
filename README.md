@@ -4,7 +4,7 @@ Last updated: 2026-11-14, with Claude Fable 5.2. See [CHANGELOG.md](CHANGELOG.md
 
 **Paste one line. One [Claude Code](https://code.claude.com) session becomes the chief of staff of your project, new or existing.**
 
-- You talk to **one agent**. There is no team to manage.
+- You talk to **one agent**. It gives the work to **background writers**, so it stays free for you.
 - It **interviews you** until it can write a plan.
 - It keeps its **memory in files**, not in the chat.
 - It asks you for decisions in **short cards**.
@@ -23,7 +23,7 @@ Change the last sentence to your own language (for example "My language: simple 
 
 ```mermaid
 flowchart LR
-    A["You paste<br/>one line"] --> B["Agent copies<br/>seven files"]
+    A["You paste<br/>one line"] --> B["Agent copies<br/>eight files"]
     B --> C["You approve<br/>the settings"]
     C --> D["Git: local<br/>or GitHub"]
     D --> E["Interview,<br/>card by card"]
@@ -44,7 +44,7 @@ Did you already talk in a session about the project? Read [the guide](docs/guide
 
 ```mermaid
 flowchart LR
-    T["Task from<br/>kb/todo.md"] --> W["Agent works<br/>on a branch"]
+    T["Task from<br/>kb/todo.md"] --> W["Chief or a writer<br/>works on a branch"]
     W --> C{"Check<br/>passes?"}
     C -- no --> W
     C -- yes --> R["Reviewer reads<br/>the diff"]
@@ -54,6 +54,30 @@ flowchart LR
 ```
 
 The reviewer is a second, read-only agent. It reads code changes only. You say yes once for the whole last step.
+
+## Parallel writers
+
+Is the agent always busy? It does not have to be. The chief gives each task to a background writer and stays free to talk to you.
+
+```mermaid
+flowchart LR
+    Y["You"] <--> C["Chief:<br/>talks, plans, checks"]
+    C --> W1["Writer 1<br/>own worktree"]
+    C --> W2["Writer 2<br/>own worktree"]
+    C --> W3["Writer 3<br/>own worktree"]
+    W1 --> B["One work branch:<br/>chief picks each commit"]
+    W2 --> B
+    W3 --> B
+    B --> S["Check, reviewer,<br/>your one yes"]
+```
+
+- Up to **three writers** at one time. Each works in its own copy of the project (a git worktree), on its own branch.
+- Two tasks that share a file **never run at the same time**.
+- The chief collects the work on one branch and runs the check after each piece. You say yes **once**, for the whole branch.
+- Small tasks stay with the chief. A writer costs usage: about 80,000 tokens to start, in our one test.
+- It works in **autopilot** too.
+
+A writer does not see your chat, so a task needs a clear "done when". This is new and tested only once, with two writers. Read [limits](docs/limits.md) first.
 
 ## Who decides
 
@@ -80,7 +104,7 @@ Away for some hours? Autopilot makes the agent work through `kb/todo.md` alone. 
 
 ```mermaid
 flowchart LR
-    A["You type<br/>/chief-autopilot"] --> B["Agent works alone<br/>on branch autopilot"]
+    A["You type<br/>/chief-autopilot"] --> B["Agent and its writers<br/>work on branch autopilot"]
     B --> C["Task done:<br/>one commit"]
     B --> Q["Open question:<br/>own pick, written<br/>to a file"]
     B --> X["Needs your yes:<br/>skipped and listed"]

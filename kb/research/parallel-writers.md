@@ -1,5 +1,7 @@
 Status: research, not approved
 
+Built into the template on 2026-11-14. The owner's answers are in `kb/approved/decisions.md`. The rule text in the template is newer than the drafts below.
+
 # Draft: the chief gives tasks to parallel writers
 
 Date: 2026-11-14.

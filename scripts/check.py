@@ -20,8 +20,8 @@ AUTOPILOT_SKILL = ".claude/skills/chief-autopilot/SKILL.md"
 # Autopilot runs with nobody there. Its skill must name each action it never does.
 AUTOPILOT_NEVER = ["git push", "git merge", "gh pr merge", "gh repo create", "deleting a file", "kb/approved/plan.md", "publishing", "deploying", "paying"]
 PROMPT_MAX_WORDS = 400
-README_MAX_LINES = 140
-README_DIAGRAMS = 4
+README_MAX_LINES = 165
+README_DIAGRAMS = 5
 # The long parts of the README live here. README.md must link to each one.
 DOCS = ["docs/guide.md", "docs/limits.md", "docs/why-one-agent.md", "docs/maintainer.md"]
 SETUP_FILE = "template/SETUP.md"
@@ -43,13 +43,21 @@ REQUIRED_ASK = [
 ]
 # The only allow rules: the two browsers, WebFetch and WebSearch. Any other allow rule fails the check.
 REQUIRED_ALLOW = ["mcp__claude-in-chrome__*", "mcp__Claude_Browser__*", "WebFetch", "WebSearch"]
-REQUIRED_GITIGNORE =[".env", ".env.*", ".secrets/", ".obsidian/"]
+# .claude/worktrees/ holds the worktrees of background writers. Without the line, git status shows them.
+REQUIRED_GITIGNORE = [".env", ".env.*", ".secrets/", ".obsidian/", ".claude/worktrees/"]
 REQUIRED_IMPORTS = ["@kb/status.md", "@kb/todo.md"]
 REVIEWER_TOOLS = "tools: Read, Grep, Glob"
+WRITER_FILE = ".claude/agents/writer.md"
+# The writer has no Agent tool and no MCP tools: an exact list, so it cannot start agents or use a browser.
+WRITER_TOOLS = "tools: Read, Grep, Glob, Edit, Write, Bash, PowerShell"
+# The writer must work in its own worktree, stay in the background, and start without CLAUDE.md and the rules file.
+WRITER_LINES = ["name: writer", "isolation: worktree", "background: true", "omitClaudeMd: true"]
+# The words in the rules file that say who the chief is.
+CHIEF_LINE = "the one agent I talk to"
 # This repo uses its own prompt. These root files must be exact copies of the template.
-ROOT_COPIES = [RULES_FILE, UPDATE_SKILL, AUTOPILOT_SKILL, ".claude/settings.json", ".claude/agents/reviewer.md", ".gitignore"]
+ROOT_COPIES = [RULES_FILE, UPDATE_SKILL, AUTOPILOT_SKILL, ".claude/settings.json", ".claude/agents/reviewer.md", WRITER_FILE, ".gitignore"]
 # Files the setup steps must name, so the agent copies all of them.
-PROMPT_MUST_NAME = [RULES_FILE, UPDATE_SKILL, AUTOPILOT_SKILL, "CLAUDE.md", ".gitignore", ".claude/settings.json", ".claude/agents/reviewer.md"]
+PROMPT_MUST_NAME = [RULES_FILE, UPDATE_SKILL, AUTOPILOT_SKILL, "CLAUDE.md", ".gitignore", ".claude/settings.json", ".claude/agents/reviewer.md", WRITER_FILE]
 # The setup steps must tell the agent to keep files that already exist.
 PROMPT_MUST_SAY = ["never replace", "Add only what is missing"]
 
@@ -105,13 +113,36 @@ def check_reviewer():
     check("name: reviewer" in lines, "reviewer.md is named reviewer")
 
 
+def check_writer():
+    text = read(TEMPLATE / WRITER_FILE)
+    if text is None:
+        return
+    match = re.match(r"---\n(.*?)\n---\n", text, re.DOTALL)
+    check(match is not None, "writer.md starts with frontmatter")
+    if match is None:
+        return
+    lines = match.group(1).splitlines()
+    tools = [line for line in lines if line.startswith("tools:")]
+    check(tools == [WRITER_TOOLS], f"writer.md has exactly '{WRITER_TOOLS}'")
+    for line in WRITER_LINES:
+        check(line in lines, f"writer.md has '{line}'")
+    check(any(line.startswith("model: ") for line in lines), "writer.md names a model")
+    check(any(line.startswith("description: ") for line in lines), "writer.md has a description")
+    body = text[match.end():]
+    # A writer that touches kb/ or pushes breaks the chief's rules for parallel work.
+    for phrase in ["Do not touch `kb/`", "push", "One commit", "git add -A"]:
+        check(phrase.lower() in body.lower(), f"writer.md names: {phrase}")
+
+
 def check_rules():
     text = read(TEMPLATE / RULES_FILE)
     if text is None:
         return
     lines = text.splitlines()
     check(len(lines) < RULES_MAX_LINES, f"the rules file is under {RULES_MAX_LINES} lines ({len(lines)})")
-    check("one main agent, no team" in text, "the rules file has the chief-of-staff line")
+    check(CHIEF_LINE in text, "the rules file has the chief-of-staff line")
+    # The chief brings the work of its writers together with cherry-pick, because git merge has an ask rule.
+    check("git cherry-pick" in text, "the rules file names git cherry-pick for the work of writers")
     # An import in this file would resolve from .claude/rules/, not from the project root.
     imports = [line for line in lines if re.search(r"(^|\s)@[\w./~-]+", line)]
     check(not imports, "the rules file has no import")
@@ -137,7 +168,7 @@ def check_update_skill():
     for name in [RULES_FILE, UPDATE_SKILL, AUTOPILOT_SKILL]:
         check(name in body, f"the update skill replaces {name}")
     # The files that belong to the project. The skill must name each one.
-    for name in ["CLAUDE.md", ".gitignore", ".claude/settings.json", ".claude/agents/reviewer.md"]:
+    for name in ["CLAUDE.md", ".gitignore", ".claude/settings.json", ".claude/agents/reviewer.md", WRITER_FILE]:
         check(name in body, f"the update skill handles {name}")
     # The update line makes the agent read this file from a clone. The skill must not clone a second time.
     check("use that clone" in body, "the update skill uses the clone it was read from")
@@ -290,6 +321,7 @@ check_readme()
 check_changelog()
 check_root_copies()
 check_reviewer()
+check_writer()
 check_rules()
 check_update_skill()
 check_autopilot_skill()

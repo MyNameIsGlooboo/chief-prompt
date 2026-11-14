@@ -28,6 +28,15 @@ Each time you write to `kb/research/autopilot-questions.md`, commit that file al
 3. If the proof fails, fix it and run it again, two times at most. If it still fails, run `git stash push -u -m "autopilot: <task>"`, write the task, the error and the stash name to the questions file as blocked, and go to the next task. Work that fails the proof never gets a commit.
 4. If the proof passes, tick `kb/todo.md`, add the task to Done in `kb/status.md`, and make one commit for this task.
 
+## Tasks for writers
+
+To be faster, give tasks to background writers as your rules say in "Background agents": three at most at one time, only tasks that share no files and do not build on each other. Do all other tasks yourself, with the steps above.
+
+1. A writer starts from main, not from `autopilot`. So give it only a task that needs nothing from this run.
+2. When a writer reports a commit, pick it onto `autopilot` with `git cherry-pick` and run the proof. If it passes, tick `kb/todo.md` and add the task to Done in `kb/status.md` in a second commit, `autopilot: tick <task>`.
+3. If a writer reports no commit, or the pick has a conflict (`git cherry-pick --abort`), or the proof fails after the pick (`git revert`), write the task, the error and the writer's branch to the questions file as blocked. Its work stays on its branch.
+4. A permission question from a writer stops the run too. So a writer gets no task that needs something from "Never in autopilot".
+
 ## An open question
 
 - Take your own pick and continue on `autopilot`. Write to the questions file: the question, the options, your pick, and the reason.
@@ -44,18 +53,19 @@ Each time you write to `kb/research/autopilot-questions.md`, commit that file al
 - `git push`, `git merge`, `gh pr merge`, `gh repo create`, deleting a file, and any edit of `kb/approved/plan.md`. Claude Code asks me before each of these, and nobody is there to answer. List a file that should be deleted in the questions file.
 - Sending email, messages, files or data to other people or outside services, publishing, deploying, and paying. A search, and opening or reading a page, is not sending.
 - Asking me to pass a CAPTCHA or a login on a page. If you cannot read a page without me, write its address and the reason to the questions file, and go on without the page.
+- Removing a worktree or a branch of a writer. They stay until I am back.
 - Any change outside this project folder.
 - Changes to hooks, settings, permissions or agents.
 
 ## When no task is left that you can do
 
-Write a short report at the top of the questions file: tasks done, tasks blocked, tasks skipped, stashes, option branches, and files to delete. Commit it and stop.
+Write a short report at the top of the questions file: tasks done, tasks blocked, tasks skipped, stashes, option branches, the worktrees and branches of writers, and files to delete. Commit it and stop.
 
 ## When I am back
 
 1. Read the questions file and show me the report.
 2. Ask one card per question: your pick, the other options, and their branches. Log my answers in `kb/approved/decisions.md`.
-3. Delete the option branches and drop the stashes that I name. Ask before any other delete.
+3. Delete the option branches and drop the stashes that I name. Remove the worktrees and the branches of the writers as your rules say for the ship step. For a blocked writer, ask me first, because its work is only on its branch. Ask before any other delete.
 4. Move the questions file to `kb/research/autopilot-questions-YYYY-MM-DD.md` with `git mv`, set Next step in `kb/status.md` to the real next step, and commit. The run is now closed.
 5. The `autopilot` branch now follows the normal rule for a ready branch: proof, reviewer, one approval. After the merge and the delete of the branch, a new run can start.
 
