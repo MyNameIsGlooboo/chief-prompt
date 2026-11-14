@@ -81,6 +81,27 @@ In "Approval", the line about parallel writers becomes:
 4. Who removes the worktrees and the branches of the writers after the ship step. My pick: the chief, in the same joined ship command, because they are its own.
 5. The line `.claude/worktrees/` in the template `.gitignore` (found in the test). My pick: yes. Without it, the autopilot skill and the update skill stop while a worktree exists.
 
+## Feedback from the chief of a real project
+
+The owner showed the five open points to the chief session of a real project (2026-11-14). It agreed with all five picks. These points from it go into the build:
+
+- The `writer` agent has no `Agent` tool, so it cannot start agents itself.
+- The brief still gives goal, files and done when. Only the fixed rules move into the agent file.
+- Model: `sonnet` is the default in the agent file. For a task that needs judgement, the chief names a stronger model in the call. The model in the call comes before the model in the agent file (Agent tool of Claude Code: "Takes precedence over the agent definition's model frontmatter"). Its example: a wrong date in 33 records that only the reviewer found.
+- The reviewer is not weaker than the writer.
+- "No shared files" is the chief's job before it starts writers. It also counts files that every task changes on the side, such as an index file. Its example: each task wrote the same `index.json`, so three tasks needed one writer, not three.
+- A fixed report from the writer: what changed, the output of the proof, what it could not check. The chief runs the reviewer, not the writer.
+- Clean-up: `git worktree remove` comes before the delete of the branch, because git refuses to delete a branch that a worktree still uses. Never `--force`: a worktree with work that is not committed must stop the command. The ship question names these deletes too.
+- `git add -A` would add the worktree folders to a commit. One more reason for the `.gitignore` line.
+- The first line of the rules file says "one main agent, no team". With writers as the normal case, the line needs new words.
+
+Two points where the draft does not follow it:
+
+- "Never `-D`". With `git cherry-pick` the writer's branch is never merged, so `git branch -d` always refuses (seen in the test). The safe way: delete with `-D` only after a check that every commit of the writer is on the work branch. `git cherry <work branch> <writer branch>` prints a line that starts with `+` for each commit that is not there. No such line, then `-D`.
+- "A background writer cannot answer a permission question, so the question stops it." The Claude Code docs say the question comes up in the main session and names the writer (sub-agents page, checked 14 Nov 2026). So the owner can answer it there. In autopilot nobody answers, and there it does stop the run. Its conclusion still holds: a writer never pushes, merges or deletes, so it does not reach such a question.
+
+One point it could not check: the agent file can force the worktree. The docs have the frontmatter field `isolation: worktree` (same page).
+
 ## Test
 
 Done on 2026-11-14 in this repo, in the Claude desktop app, with two writers at the same time (`general-purpose` agents, model `sonnet`, `isolation: worktree`). Each writer added one small file and made one commit.
