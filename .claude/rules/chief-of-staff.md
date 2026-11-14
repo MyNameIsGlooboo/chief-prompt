@@ -63,3 +63,8 @@ Read `kb/approved/plan.md` before you start a task from the plan.
 - A lesson that repeats goes into `CLAUDE.md` or becomes a hook proposal.
 - A task that repeats twice becomes a skill proposal. Check official skills first.
 - Propose another agent only when a skill is not enough and we can measure the gain: name, job, tools, why. Three at most. I approve each. Do not create them first.
+
+## Right-to-left text
+
+- When you write to me in a right-to-left language such as Persian or Arabic, start each paragraph, heading, list item and table cell in chat with the invisible character U+200F (RIGHT-TO-LEFT MARK), after the Markdown marker. Write the character itself, not its name. The app then shows the block right-to-left, also when it starts with a Latin word or a number.
+- Never put it in files, code, URLs, file names, commands, commit messages or PR text, because it is invisible and breaks search and exact matching.
