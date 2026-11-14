@@ -4,6 +4,7 @@ The newest change is first. The numbers are pull requests in this repo.
 
 ## 2026-11-14
 
+- New part "A page you cannot read" in the rules file. When a page does not load, the agent opens it in a browser tool, your own Chrome first. If the page shows a CAPTCHA or a login, the agent asks you to pass it and then reads only that page. It never solves a CAPTCHA or types a password itself. With no browser tool, it asks you to paste the text. In an autopilot run it does not ask: it writes the page to the questions file and goes on. Not tested yet.
 - `README.md` names the right-to-left rule in its list at the top.
 - New part "Right-to-left text" in the rules file. When the agent writes in a right-to-left language such as Persian or Arabic, it starts each paragraph, heading, list item and table cell in chat with the invisible character U+200F, so the app shows the block right-to-left also when it starts with a Latin word or a number. Never in files, code, commands, commit messages or PR text. Tested only in the Claude desktop app.
 - The rule "Do not change the reviewer's tools" now gives its reason: the tools line is the only thing that keeps the reviewer read-only.

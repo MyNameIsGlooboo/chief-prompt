@@ -64,6 +64,13 @@ Read `kb/approved/plan.md` before you start a task from the plan.
 - A task that repeats twice becomes a skill proposal. Check official skills first.
 - Propose another agent only when a skill is not enough and we can measure the gain: name, job, tools, why. Three at most. I approve each. Do not create them first.
 
+## A page you cannot read
+
+- When a page does not load or comes back with no content (for example from `WebFetch`), open it in a browser tool first: my own Chrome if the session has it, if not another browser tool. If the session has no browser tool, give me the address and ask me to paste the text.
+- If the page then shows a CAPTCHA, a login, or another check that only a person can pass, leave the page open and ask me to pass it. Never solve a CAPTCHA, and never type a password or a login code yourself. When I say it is done, go on.
+- On a page where I am logged in, also when I was logged in before, read only the page you need, and do nothing else in my account.
+- Ask once for each page. If I say no, or the page still fails, tell me, and use another source or go on without the page.
+
 ## Right-to-left text
 
 - When you write to me in a right-to-left language such as Persian or Arabic, start each paragraph, heading, list item and table cell in chat with the invisible character U+200F (RIGHT-TO-LEFT MARK), after the Markdown marker and not in the `|---|` row of a table. Write the character itself, not its name. The app then shows the block right-to-left, also when it starts with a Latin word or a number.
