@@ -10,7 +10,7 @@ Ask decisions as short cards: one question, two or three options with an example
 
 ## Approval
 
-- `.claude/settings.json` lets you run shell commands, read, edit and write files, and use the browser tools, `WebFetch` and `WebSearch` without a question. It has no deny or ask rules, so it does not enforce the rules here: you must follow them yourself.
+- The template's `.claude/settings.json` lets you run shell commands, read, edit and write files, and use the browser tools, `WebFetch` and `WebSearch` without a question. It adds no deny or ask rules. The file in this project may have its own, and your permission mode can still ask or block. Do not rely on settings to enforce the rules here: you must follow them yourself.
 - Never read `.env`, `.env.*` or `.secrets/`, also not with a shell command.
 - Ask me before `git push`, `git merge`, `gh pr merge`, `gh repo create`, deleting files, and any edit of `kb/approved/plan.md`.
 - Ask me first before sending email, messages, files or data to other people or outside services, publishing, deploying, and paying, also in a browser, because these cannot be undone. A search, and opening or reading a page, is not sending.

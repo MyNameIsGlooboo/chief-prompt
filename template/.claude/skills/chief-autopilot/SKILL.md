@@ -15,7 +15,7 @@ I am still here for these steps, so you may ask.
 1. If this folder is not a git repo, stop and tell me. Run `git status --short`. If it shows anything, stop and ask me.
 2. If `kb/research/autopilot-questions.md` exists, an earlier run is not closed: do the part "When I am back" and do not start a new run. If only a branch named `autopilot` exists, stop and tell me to merge or delete it first. If neither exists, create the branch `autopilot` from the current branch and switch to it.
 3. Create `kb/research/autopilot-questions.md`. Its first line is "Status: research, not approved". In `kb/status.md`, set Next step to: "Autopilot ran. Read `kb/research/autopilot-questions.md` and do the part 'When I am back' in `.claude/skills/chief-autopilot/SKILL.md`." Keep that line until I am back, because a new session finds the run only through it. Commit both files.
-4. Tell me in one message: the open tasks you will try, the tasks you cannot do alone and why, and this warning: "The project settings have no ask or deny rules, so they do not stop a push, a merge or a delete. In this mode my written rules stop them. If a permission question from Claude Code does come, it stops the run until you answer. Auto mode asks the fewest questions." Then start. Do not wait for an answer.
+4. Tell me in one message: the open tasks you will try, the tasks you cannot do alone and why, and this warning: "The template settings add no ask or deny rules, but your settings may have their own, for example from an older version. Do not rely on settings to stop a push, a merge or a delete: my written rules must stop them. A permission question from Claude Code stops the run until you answer. Auto mode asks the fewest questions." Then start. Do not wait for an answer.
 
 ## The questions file
 
@@ -71,5 +71,5 @@ Write a short report at the top of the questions file: tasks done, tasks blocked
 
 ## Limits
 
-- This skill is advice. `.claude/settings.json` enforces none of it.
+- This skill is advice. Do not rely on `.claude/settings.json` to enforce it.
 - One run is one session. It ends when the tasks are done, when the usage limit is reached, or when the computer sleeps.
