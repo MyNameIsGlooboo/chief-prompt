@@ -27,22 +27,8 @@ DOCS = ["docs/guide.md", "docs/limits.md", "docs/why-one-agent.md", "docs/mainta
 SETUP_FILE = "template/SETUP.md"
 SOURCE_REPO = "https://github.com/MyNameIsGlooboo/chief-prompt"
 
-REQUIRED_DENY = ["Read(.env)", "Read(.env.*)", "Read(/.secrets/**)"]
-REQUIRED_ASK = [
-    "Bash(git push *)",
-    "Bash(git merge *)",
-    "Bash(gh pr merge *)",
-    "Bash(gh repo create *)",
-    "Bash(rm *)",
-    "PowerShell(git push *)",
-    "PowerShell(git merge *)",
-    "PowerShell(gh pr merge *)",
-    "PowerShell(gh repo create *)",
-    "PowerShell(Remove-Item *)",
-    "Edit(/kb/approved/plan.md)",
-]
-# The only allow rules: the two browsers, WebFetch and WebSearch. Any other allow rule fails the check.
-REQUIRED_ALLOW = ["mcp__claude-in-chrome__*", "mcp__Claude_Browser__*", "WebFetch", "WebSearch"]
+# The settings allow these tools and have no deny or ask rules. Any other allow rule fails the check.
+REQUIRED_ALLOW = ["mcp__claude-in-chrome__*", "mcp__Claude_Browser__*", "WebFetch", "WebSearch", "Bash", "PowerShell", "Read", "Edit", "Write"]
 # .claude/worktrees/ holds the worktrees of background writers. Without the line, git status shows them.
 REQUIRED_GITIGNORE = [".env", ".env.*", ".secrets/", ".obsidian/", ".claude/worktrees/"]
 REQUIRED_IMPORTS = ["@kb/status.md", "@kb/todo.md"]
@@ -87,12 +73,8 @@ def check_settings():
         check(False, f"settings.json is valid JSON ({error})")
         return
     check(True, "settings.json is valid JSON")
-    deny = permissions.get("deny", [])
-    ask = permissions.get("ask", [])
-    for rule in REQUIRED_DENY:
-        check(rule in deny, f"settings.json denies {rule}")
-    for rule in REQUIRED_ASK:
-        check(rule in ask, f"settings.json asks before {rule}")
+    for key in ["deny", "ask"]:
+        check(key not in permissions, f"settings.json has no {key} rules")
     allow = permissions.get("allow", [])
     for rule in REQUIRED_ALLOW:
         check(rule in allow, f"settings.json allows {rule}")
@@ -141,9 +123,9 @@ def check_rules():
     lines = text.splitlines()
     check(len(lines) < RULES_MAX_LINES, f"the rules file is under {RULES_MAX_LINES} lines ({len(lines)})")
     check(CHIEF_LINE in text, "the rules file has the chief-of-staff line")
-    # The chief brings the work of its writers together with cherry-pick, because git merge has an ask rule.
+    # The chief brings the work of its writers together with cherry-pick, because git merge needs the user's yes.
     check("git cherry-pick" in text, "the rules file names git cherry-pick for the work of writers")
-    # A writer works where the ask rule for the plan may not reach. The chief must look at the files of a commit before the pick.
+    # A writer could change the plan or the settings in its worktree. The chief must look at the files of a commit before the pick.
     check("git show --stat" in text, "the rules file checks the files of a commit before a pick")
     # An import in this file would resolve from .claude/rules/, not from the project root.
     imports = [line for line in lines if re.search(r"(^|\s)@[\w./~-]+", line)]

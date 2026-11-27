@@ -1,6 +1,6 @@
 # The Chief Prompt
 
-Last updated: 2026-11-14, with Claude Fable 5.2. See [CHANGELOG.md](CHANGELOG.md).
+Last updated: 2026-11-27, with Claude Sonnet 5.5. See [CHANGELOG.md](CHANGELOG.md).
 
 **Paste one line. One [Claude Code](https://code.claude.com) session becomes the chief of staff of your project, new or existing.**
 
@@ -9,7 +9,7 @@ Last updated: 2026-11-14, with Claude Fable 5.2. See [CHANGELOG.md](CHANGELOG.md
 - It keeps its **memory in files**, not in the chat.
 - It asks you for decisions in **short cards**.
 - It shows **right-to-left languages** such as Persian and Arabic the right way in chat, also when a line starts with an English word or a number.
-- It asks you before it sends, publishes, deploys, pays, deletes, or merges for you. Claude Code enforces only a part of this: see "Who decides".
+- It asks you before it sends, publishes, deploys, pays, deletes, or merges for you. This is a written rule that the settings do not enforce: see "Who decides".
 
 ## Start
 
@@ -87,11 +87,11 @@ flowchart LR
         direction TB
         a1["Read, search, edit"] ~~~ a2["Run tests"] ~~~ a3["Commit on a branch"]
     end
-    subgraph asks["The agent asks you first"]
+    subgraph asks["The agent asks you first (advice only)"]
         direction TB
-        b1["Push, merge, delete files,<br/>change the approved plan<br/>(Claude Code enforces this)"] ~~~ b2["Send, publish, deploy, pay<br/>(advice only, not enforced)"]
+        b1["Push, merge, delete files,<br/>change the approved plan"] ~~~ b2["Send, publish, deploy, pay"]
     end
-    subgraph never["Claude Code blocks"]
+    subgraph never["The agent never does (advice only)"]
         direction TB
         c1["Reading .env, .env.*<br/>and .secrets/"]
     end
@@ -118,7 +118,7 @@ flowchart LR
 How to use it:
 
 1. Check that `kb/todo.md` has open tasks and that all your work is committed.
-2. Switch Claude Code to auto mode. A permission question from Claude Code stops the run until you answer, and auto mode asks the fewest. The setting `denyInsteadOfPrompting` makes Claude Code refuse the action and go on. Read [limits](docs/limits.md) before you use it.
+2. Switch Claude Code to auto mode. A permission question from Claude Code stops the run until you answer, and auto mode asks the fewest. The project settings do not stop a push, a merge or a delete. Read [limits](docs/limits.md) first.
 3. Type `/chief-autopilot`. The agent tells you which tasks it will try and which it cannot do alone. Then you can go.
 4. When you are back, say "hello", also in a new session. The agent shows you its report and asks one card per question.
 5. Say yes or no to the `autopilot` branch, as for any other branch.
@@ -142,10 +142,10 @@ The agent replaces the three files that the prompt owns and adds only the missin
 
 ## Five limits to know
 
-1. **Most of it is advice.** The agent can drift from it. Only the rules in `.claude/settings.json` are enforced by Claude Code.
+1. **Most of it is advice.** The agent can drift from it. `.claude/settings.json` has no deny or ask rules, so it enforces none of the prompt's rules.
 2. **You trust this repo.** The install line and the update line make the agent follow the steps on the main branch at that moment. Read [`template/SETUP.md`](template/SETUP.md) first if that matters to you.
-3. **"Ask before sending, publishing, deploying, or paying" is not enforced.** Settings cannot catch these, and the browser tools run with no question from Claude Code.
-4. **The settings have holes.** A script that opens `.env` itself is not blocked, and `rm` is not the only way to delete a file.
+3. **The project settings enforce no "ask first" rule.** That covers push, merge, delete, the approved plan, sending, publishing, deploying, and paying.
+4. **The settings are wide open.** They allow shell commands, file reads and edits, and the browser tools. Nothing in them blocks a read of `.env` or `.secrets/`.
 5. **It is young.** It has not been tested over weeks of real use, or on a real project that already has files.
 
 All limits are in [docs/limits.md](docs/limits.md).
