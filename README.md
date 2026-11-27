@@ -142,7 +142,7 @@ The agent replaces the three files that the prompt owns and adds only the missin
 
 ## Five limits to know
 
-1. **Most of it is advice.** The agent can drift from it. `.claude/settings.json` has no deny or ask rules, so it enforces none of the prompt's rules.
+1. **Most of it is advice.** The agent can drift from it. The template's `.claude/settings.json` adds no deny or ask rules, so it enforces none of the prompt's rules.
 2. **You trust this repo.** The install line and the update line make the agent follow the steps on the main branch at that moment. Read [`template/SETUP.md`](template/SETUP.md) first if that matters to you.
 3. **The project settings enforce no "ask first" rule.** That covers push, merge, delete, the approved plan, sending, publishing, deploying, and paying.
 4. **The settings are wide open.** They allow shell commands, file reads and edits, and the browser tools. Nothing in them blocks a read of `.env` or `.secrets/`.
