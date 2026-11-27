@@ -15,7 +15,7 @@ I am still here for these steps, so you may ask.
 1. If this folder is not a git repo, stop and tell me. Run `git status --short`. If it shows anything, stop and ask me.
 2. If `kb/research/autopilot-questions.md` exists, an earlier run is not closed: do the part "When I am back" and do not start a new run. If only a branch named `autopilot` exists, stop and tell me to merge or delete it first. If neither exists, create the branch `autopilot` from the current branch and switch to it.
 3. Create `kb/research/autopilot-questions.md`. Its first line is "Status: research, not approved". In `kb/status.md`, set Next step to: "Autopilot ran. Read `kb/research/autopilot-questions.md` and do the part 'When I am back' in `.claude/skills/chief-autopilot/SKILL.md`." Keep that line until I am back, because a new session finds the run only through it. Commit both files.
-4. Tell me in one message: the open tasks you will try, the tasks you cannot do alone and why, and this warning: "A permission question from Claude Code stops the run until you answer. Auto mode asks the fewest questions. With `"denyInsteadOfPrompting": true` under `permissions` in a file passed with `--settings`, Claude Code refuses such an action and the run goes on (v2.1.319 or later). While it is on, a push, a merge and a delete are refused also after your yes, so do 'When I am back' in a session without it." Only I set that setting, never you. Then start. Do not wait for an answer.
+4. Tell me in one message: the open tasks you will try, the tasks you cannot do alone and why, and this warning: "The template settings add no ask or deny rules, but your settings may have their own, for example from an older version. Do not rely on settings to stop a push, a merge or a delete: my written rules must stop them. A permission question from Claude Code stops the run until you answer. Auto mode asks the fewest questions." Then start. Do not wait for an answer.
 
 ## The questions file
 
@@ -50,7 +50,7 @@ To be faster, give tasks to background writers as your rules say in "Background 
 
 ## Never in autopilot
 
-- `git push`, `git merge`, `gh pr merge`, `gh repo create`, deleting a file, and any edit of `kb/approved/plan.md`. Claude Code asks me before each of these, and nobody is there to answer. List a file that should be deleted in the questions file.
+- `git push`, `git merge`, `gh pr merge`, `gh repo create`, deleting a file, and any edit of `kb/approved/plan.md`. Each of these needs my yes, and nobody is there to give it. Claude Code may not stop you, so you must stop yourself. List a file that should be deleted in the questions file.
 - Sending email, messages, files or data to other people or outside services, publishing, deploying, and paying. A search, and opening or reading a page, is not sending.
 - Asking me to pass a CAPTCHA or a login on a page. If you cannot read a page without me, write its address and the reason to the questions file, and go on without the page.
 - Removing a worktree or a branch of a writer. They stay until I am back.
@@ -71,5 +71,5 @@ Write a short report at the top of the questions file: tasks done, tasks blocked
 
 ## Limits
 
-- This skill is advice. Only the deny and ask rules in `.claude/settings.json` are enforced.
+- This skill is advice. Do not rely on `.claude/settings.json` to enforce it.
 - One run is one session. It ends when the tasks are done, when the usage limit is reached, or when the computer sleeps.

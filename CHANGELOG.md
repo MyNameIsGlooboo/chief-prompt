@@ -2,6 +2,10 @@
 
 The newest change is first. The numbers are pull requests in this repo.
 
+## 2026-11-27
+
+- Owner's change: `.claude/settings.json` has no deny or ask rules. It now also allows `Bash`, `PowerShell`, `Read`, `Edit` and `Write`. The project settings no longer block reads of `.env` or `.secrets/`, and ask nothing before a push, a merge, a delete or a plan edit. The "ask first" rules stay in the rules file and the autopilot skill as advice, with a new written rule not to read secrets. The autopilot warning no longer names `denyInsteadOfPrompting`. The check script, `README.md` and `docs/` match. The update never removes a rule, so older projects keep their deny and ask rules. Not tested in a live session.
+
 ## 2026-11-14
 
 - `/chief-update` now needs one run. After the clone, the agent reads the newest update steps in the clone and goes on with those, also when the copy in the project is older. Reason: in a real project the old copy knew seven files and did not copy the new `writer.md`. A project with an update skill from before this change still needs a second run, once, or the update line from the README.

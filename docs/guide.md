@@ -36,7 +36,7 @@ Three files belong to the prompt. The agent copies them exactly, and an update r
 Five files belong to you. The agent copies one only if you do not have it. If you have it, the agent adds the missing lines and changes nothing else:
 
 - [`CLAUDE.md`](../template/CLAUDE.md): the rules of your project. The prompt needs only the Language part and two import lines in it.
-- [`.claude/settings.json`](../template/.claude/settings.json): the rules that Claude Code itself enforces.
+- [`.claude/settings.json`](../template/.claude/settings.json): the tools that the agent can use without a question. It has no deny or ask rules.
 - [`.claude/agents/reviewer.md`](../template/.claude/agents/reviewer.md): the read-only reviewer.
 - [`.claude/agents/writer.md`](../template/.claude/agents/writer.md): the background writer. It does one task in its own worktree and makes one commit. Its `model` line names a cheaper model: change it if the work is too weak.
 - [`.gitignore`](../template/.gitignore)
@@ -61,7 +61,7 @@ Commit your work, then paste the update line from the [README](../README.md#upda
 Clone https://github.com/MyNameIsGlooboo/chief-prompt to a temporary folder outside this project, read its template/.claude/skills/chief-update/SKILL.md, and do the steps in it.
 ```
 
-The agent reads the newest update steps from this repo and replaces the three files the prompt owns: the rules file, the autopilot skill, and the update skill. In your own files it adds only what is missing: new allow, deny and ask rules in `.claude/settings.json`, new lines in `.gitignore`. If the reviewer file or the writer file differs, it asks you which one to keep. Then it shows you `git diff` and waits for your yes before it commits. Open a new session after that.
+The agent reads the newest update steps from this repo and replaces the three files the prompt owns: the rules file, the autopilot skill, and the update skill. In your own files it adds only what is missing: new rules in `.claude/settings.json`, new lines in `.gitignore`. If the reviewer file or the writer file differs, it asks you which one to keep. Then it shows you `git diff` and waits for your yes before it commits. Open a new session after that.
 
 **The line works in every project.** It needs no update skill in the project, and one run is enough, because the steps come from this repo and not from your older copy.
 
@@ -96,4 +96,4 @@ Autopilot is a mode that you turn on. It is never on by itself. Type `/chief-aut
 - If the check for a task fails twice, the agent puts that work into a named `git stash` and goes to the next task. Failed work gets no commit.
 - When you are back, say "hello", also in a new session. `kb/status.md` points the agent to the questions file. The agent shows you the report and asks one card per question. Then the `autopilot` branch goes through the normal step: check, reviewer, your one yes.
 
-**Before you start it:** a permission question from Claude Code stops the run until you answer. Auto mode asks the fewest questions ([permission modes](https://code.claude.com/docs/en/permission-modes), checked 13 Nov 2026). The ask rules in `.claude/settings.json` ask in every mode, which is why autopilot never pushes, merges, or deletes. With the setting `denyInsteadOfPrompting`, Claude Code refuses such an action and the run goes on. Only you can set it, and you must turn it off again before you say yes to a branch: see [limits.md](limits.md). Read the limits in [limits.md](limits.md) too.
+**Before you start it:** a permission question from Claude Code stops the run until you answer. Auto mode asks the fewest questions ([permission modes](https://code.claude.com/docs/en/permission-modes), checked 13 Nov 2026). The template settings add no ask rules, so count on only the written rules keep autopilot from a push, a merge, or a delete. Read the limits in [limits.md](limits.md) too.
